@@ -10,14 +10,15 @@ DiscountCard::DiscountCard()
 }
 
 void DiscountCard::ShowCardInfo() {
-	cout << "Card's number: " << DCNumber << "\nDiscount: " << discount << " %\nSuma product's price: " << SavePrice <<" UAH" << endl;
+	cout << "Card's number: " << DCNumber << "\nDiscount: " << discount << "%\nSuma product's price: " << SavePrice <<" UAH" << endl;
 
 }
 
 void DiscountCard::UpdateDiscount(unsigned int cost) {
+	
 	bool exit = false;
 	while (!exit) {
-		if (cost >= 1000) {
+		if ((SavePrice%1000)+cost >= 1000&&discount<10) {
 			discount++;
 			cost -= 1000;
 		}
@@ -26,6 +27,7 @@ void DiscountCard::UpdateDiscount(unsigned int cost) {
 			exit = true;
 		}
 	}
+
 
 }
 
@@ -39,19 +41,22 @@ void DiscountCard::BuyProductWithCard(unsigned int cost) {
 }
 
 void DiscountCard::ShowDiscountProduct(unsigned int cost) {
-	cout <<"Price with discount: "<< cost - (cost*discount) / 100;
+	cout << "Price with discount: " << cost - (cost*discount)/100 << endl;
 }
 
 void DiscountCard::ShowDiscount() {
-	cout << "Your discount: " << discount << endl;
+	cout << "Your discount: " << discount << "%" << endl;
 }
 
 void DiscountCard::Checking() {
-	if (SavePrice%1000 != 0) {
-		cout << "Buy products for price: " << 1000 - SavePrice%1000 << " UAH and get discount 1%" << endl;
+	if (SavePrice%1000 !=0&&discount<10) {
+		cout << "Buy products for price: " << 1000 - SavePrice%1000 << " UAH and get discount " << discount + 1 << "%" << endl;
+	}
+	else if(discount < 10) {
+		cout << "Buy products for price: " << 1000 << " UAH and get discount "<<discount+1 <<"%" << endl;
 	}
 	else {
-		cout << "Buy products for price: " << 1000 << " UAH and get discount 1%" << endl;
+		cout << "You've used max discount" << endl;
 	}
 
 }

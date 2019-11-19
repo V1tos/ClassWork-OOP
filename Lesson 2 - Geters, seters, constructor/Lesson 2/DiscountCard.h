@@ -14,8 +14,9 @@ private:
 	
 
 public:
-	void UpdateDiscount(unsigned int cost);
+	
 	DiscountCard();
+	void UpdateDiscount(unsigned int cost);
 	void BuyProductWithCard(unsigned int cost);
 	void ShowDiscountProduct(unsigned int cost);
 	void Checking();
