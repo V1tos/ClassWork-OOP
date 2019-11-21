@@ -6,11 +6,10 @@ Train::Train()
 {
 }
 
-Train::Train(unsigned short number, string name, int size)
+Train::Train(unsigned short number, string name)
 {
 	this->number = number;
 	this->name = name;
-	this->size = size;
 	
 }
 
@@ -34,75 +33,71 @@ void Train::SetNumber(unsigned short number)
 	this->number = number;
 }
 
+void Train::FillCars()
+{
+	this->carsCount = 3;
+	this->train = new Car[this->carsCount];
+	
+	string type;
+	unsigned short passengers = 0;
+	for (int i = 0; i < this->carsCount; i++) {
+		
+		cout << "Enter car's type: ";
+		cin >> type;
+		cout << "Enter passenger's count: ";
+		cin >> passengers;
+		this->train[i] = Car(type, passengers);
+	}
+	
+	
+}
+
 void Train::ShowTrain()
 {
-	cout << "========================LVIV-KYIV==========================\n";
-	cout << "Passenger's count: " << this->passengersCount << "\nCar's count: " << this->size << endl;
-	cout << "========================LVIV-KYIV==========================\n";
+	cout << "========================"<<this->name <<"==========================\n";
+	cout << "Passenger's count: " << this->SumaPassengers() << "\nCar's count: " << this->carsCount << endl;
+	cout << "========================"<< this->name << "==========================\n";
 }
 
-void Train::SetCars(Car *cars)
+unsigned short Train::SumaPassengers()
 {
-	this->train = cars;
-}
-
-void Train::ShowCars()
-{
-	for (int i = 0; i < this->size; i++) {
-		cout << "Car N" << i + 1<<":" << endl;
-		this->train[i].ShowCar();
+	unsigned short passengersCount = 0;
+	for (int i = 0; i < this->carsCount; i++) {
+	passengersCount += this->train[i].GetPassengers();
 	}
 
+	return passengersCount;
 }
 
-void Train::ShowAllPassengers()
+void Train::FindMaxPassengers()
 {
-	
-	for (int i = 0; i < this->size; i++) {
-	this->passengersCount += this->train[i].GetPassengers();
-	}
-
-	cout << "All passengers: " << this->passengersCount << endl;
-}
-
-void Train::ShowMaxPassengers()
-{
+	int addresI = 0;
 	unsigned short max = 0;
-	for (int i = 0; i < this->size; i++) {
+	for (int i = 0; i < this->carsCount; i++) {
 		if (this->train[i].GetPassengers() > max ) {
 			max = this->train[i].GetPassengers();
+			addresI = i;
 		}
 	}
 
-	cout << "Max passengers ";
-	for (int i = 0; i < this->size; i++) {
-		if (max==this->train[i].GetPassengers() ) {
-			cout << "in car N" << i + 1 <<":" << endl;
-			this->train[i].ShowCar();
-		}
-	}
-
+	cout << "Max passengers in car N" << addresI + 1 << endl;
+	this->train[addresI].ShowCar();
 	
 }
 
-void Train::ShowMinPassengers()
+void Train::FindMinPassengers()
 {
+	int addresI = 0;
 	unsigned short min = this->train[0].GetPassengers();
-	for (int i = 0; i < this->size; i++) {
+	for (int i = 0; i < this->carsCount; i++) {
 		if (this->train[i].GetPassengers()<min) {
 			min = this->train[i].GetPassengers();
+			addresI = i;
 		}
 	}
 
-	cout << "Min passengers ";
-	for (int i = 0; i < this->size; i++) {
-		if (min == this->train[i].GetPassengers()) {
-			cout << "in car N" << i + 1 << ":" << endl;
-			this->train[i].ShowCar();
-		}
-	}
-
-
+	cout << "Min passengers in car N" << addresI + 1 << endl;
+	this->train[addresI].ShowCar();
 }
 
 

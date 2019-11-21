@@ -3,42 +3,55 @@
 
 
 int main() {
-	int size = 3, tSize = 2;
-	Train Poizd(154, "Lviv-Kyiv", size);
-	Train *poizd = new Train[tSize];
-	Car *cars = new Car[size];
-
-	string type;
-	unsigned short passengers;
-	for (int i = 0; i < tSize; i++) {
+	int trainsCount = 2;
 	
-		for (int j = 0; j < size; j++) {
-			cout << "Car N" << j + 1 << endl;
-			cout << "Enter car's type: ";
-			cin >> type;
-			cout << "Enter passenger's count: ";
-			cin >> passengers;
-			cars[j] = Car(type, passengers);
-		}
-		poizd[i].SetCars(cars);
+	Train *trains = new Train[trainsCount];
+	unsigned short number = 0;
+	string name;
+
+	for (int i = 0; i < trainsCount; i++) {
+		cout << "Train N" << i + 1 << endl;
+		cout << "Enter train's number: ";
+		cin >> number;
+		cout << "Enter train's name: ";
+		cin >> name;
+		trains[i] = Train(number, name);
+		system("cls");
 	}
 
+	for (int i = 0; i < trainsCount; i++) {
+		cout << "Train N" << i + 1 << endl;
+		trains[i].FillCars();
+		system("cls");
+	}
 	
-	//for (int i = 0; i < size; i++) {
-	//	cout << "Car N" << i + 1 << endl;
-	//	cout << "Enter car's type: ";
-	//	cin >> type;
-	//	cout << "Enter passenger's count: ";
-	//	cin >> passengers;
-	//	cars[i] = Car(type, passengers);
-	//}
+	for (int i = 0; i < trainsCount; i++) {
+		cout << "Train N" << i + 1 << endl;
+		cout <<"All passengers: " << trains[i].SumaPassengers();
+		cout << endl;
+	}
 
-	Poizd.SetCars(cars);
-	Poizd.ShowCars();
-	Poizd.ShowAllPassengers();
-	Poizd.ShowMaxPassengers();
-	Poizd.ShowMinPassengers();
-	Poizd.ShowTrain();
+	for (int i = 0; i < trainsCount; i++) {
+		cout << "Train N" << i + 1 << endl;
+		trains[i].ShowTrain();
+		cout << endl;
+		
+	}
+
+	for (int i = 0; i < trainsCount; i++) {
+		cout << "Train N" << i + 1 << endl;
+		trains[i].FindMaxPassengers();
+		cout << endl;
+
+	}
+
+	for (int i = 0; i < trainsCount; i++) {
+		cout << "Train N" << i + 1 << endl;
+		trains[i].FindMinPassengers();
+		cout << endl;
+
+	}
+
 	system("pause");
 	return 0;
 }
