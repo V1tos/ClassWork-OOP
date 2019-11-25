@@ -7,20 +7,21 @@ class Train
 private:
 	unsigned short number;
 	string name;
-	int carsCount;
+	unsigned short carsCount;
 	Car *train;
 public:
 	Train();
-	Train(unsigned short number, string name);
+	Train(Train &Object);
+	Train(unsigned short number, string name, unsigned short carsCount);
 	string GetName();
 	unsigned short GetNumber();
 	void SetName(string name);
 	void SetNumber(unsigned short number);
 	void ShowTrain();
-	void FillCars();
 	unsigned short SumaPassengers();
 	void FindMaxPassengers();
 	void FindMinPassengers();
+	~Train();
 	
 };
 

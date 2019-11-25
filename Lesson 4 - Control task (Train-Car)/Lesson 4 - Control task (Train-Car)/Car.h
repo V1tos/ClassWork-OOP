@@ -14,6 +14,7 @@ public:
 	Car(string type, unsigned short passengers);
 	string GetType();
 	unsigned short GetPassengers();
+	void FillCar();
 	void SetType(string type);
 	void SetPassengers(unsigned short passengers);
 	void ShowCar();

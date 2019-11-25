@@ -6,10 +6,32 @@ Train::Train()
 {
 }
 
-Train::Train(unsigned short number, string name)
+Train::Train(Train &Object)
+{
+	this->number = Object.number;
+	this->name = Object.name;
+	this->carsCount = Object.carsCount;
+	this->train = new Car[this->carsCount];
+	for (int i = 0; i < this->carsCount; i++)
+	{
+		this->train[i] = Object.train[i];
+	}
+	
+		
+}
+
+Train::Train(unsigned short number, string name,unsigned short carsCount)
 {
 	this->number = number;
 	this->name = name;
+	this->carsCount = carsCount;
+	this->train = new Car[this->carsCount];
+	for (int i = 0; i < this->carsCount; i++)
+	{
+		train[i].FillCar();
+
+	}
+
 	
 }
 
@@ -33,29 +55,16 @@ void Train::SetNumber(unsigned short number)
 	this->number = number;
 }
 
-void Train::FillCars()
-{
-	this->carsCount = 3;
-	this->train = new Car[this->carsCount];
-	
-	string type;
-	unsigned short passengers = 0;
-	for (int i = 0; i < this->carsCount; i++) {
-		
-		cout << "Enter car's type: ";
-		cin >> type;
-		cout << "Enter passenger's count: ";
-		cin >> passengers;
-		this->train[i] = Car(type, passengers);
-	}
-	
-	
-}
+
 
 void Train::ShowTrain()
 {
 	cout << "========================"<<this->name <<"==========================\n";
 	cout << "Passenger's count: " << this->SumaPassengers() << "\nCar's count: " << this->carsCount << endl;
+	for (int i = 0; i < this->carsCount; i++)
+	{
+		this->train[i].ShowCar();
+	}
 	cout << "========================"<< this->name << "==========================\n";
 }
 
@@ -98,6 +107,12 @@ void Train::FindMinPassengers()
 
 	cout << "Min passengers in car N" << addresI + 1 << endl;
 	this->train[addresI].ShowCar();
+}
+
+Train::~Train()
+{
+	delete[] this->train;
+	this->train = nullptr;
 }
 
 

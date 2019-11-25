@@ -22,6 +22,17 @@ unsigned short Car::GetPassengers()
 	return this->passengers;
 }
 
+void Car::FillCar()
+{
+	
+	cout << "Enter car's type: ";
+	cin >> this->type;
+	cout << "Enter passenger's count: ";
+	cin >> this->passengers;
+	
+
+}
+
 void Car::SetType(string type)
 {
 	this->type = type;
