@@ -9,6 +9,8 @@ class Car
 private:
 	string type;
 	unsigned short passengers;
+	static unsigned int counter;
+	unsigned int carID;
 public:
 	Car();
 	Car(string type, unsigned short passengers);

@@ -10,6 +10,8 @@ Car::Car(string type, unsigned short passengers)
 {
 	this->type = type;
 	this->passengers = passengers;
+	this->counter++;
+	this->carID = counter;
 }
 
 string Car::GetType()

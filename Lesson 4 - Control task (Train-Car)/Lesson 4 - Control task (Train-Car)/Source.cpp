@@ -1,7 +1,7 @@
 #include "Train.h"
 
 
-
+unsigned int Car::counter = 0;
 int main() {
 	/*int trainsCount = 1;
 	
