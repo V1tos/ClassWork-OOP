@@ -11,7 +11,9 @@ private:
 public:
 	XString();
 	XString(char string[]);
-	XString operator*(XString &other);
+	XString operator*=(XString &other);
+	XString operator/=(XString &other);
+	XString operator+=(XString &other);
 	void ShowString();
 	~XString();
 };

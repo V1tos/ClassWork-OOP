@@ -1,8 +1,13 @@
 ﻿  XString.cpp
-d:\v1tos\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(12): warning C4018: '<': signed/unsigned mismatch
-d:\v1tos\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(26): warning C4018: '<': signed/unsigned mismatch
-d:\v1tos\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(28): warning C4018: '<': signed/unsigned mismatch
-d:\v1tos\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(31): warning C4553: '==': result of expression not used; did you intend '='?
-d:\v1tos\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(38): warning C4018: '<': signed/unsigned mismatch
-d:\v1tos\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(47): warning C4018: '<': signed/unsigned mismatch
-  Lesson 8 - Overload operator.vcxproj -> D:\V1tos\Lesson 8 - Overload operator\Debug\Lesson 8 - Overload operator.exe
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(12): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(24): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(26): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(36): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(50): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(53): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(66): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(80): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(83): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(93): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class work (oop)\lesson 8 - overload operator\lesson 8 - overload operator\xstring.cpp(104): warning C4018: '<': signed/unsigned mismatch
+  Lesson 8 - Overload operator.vcxproj -> D:\ШАГ\Програмування\Class Work (OOP)\Lesson 8 - Overload operator\Debug\Lesson 8 - Overload operator.exe
