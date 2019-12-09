@@ -1,0 +1,7 @@
+﻿  Source.cpp
+d:\v1tos\lesson 12 - template class\lesson 12 - template class\source.cpp(30): error C2248: 'Book::price': cannot access private member declared in class 'Book'
+  d:\v1tos\lesson 12 - template class\lesson 12 - template class\source.cpp(55): note: see declaration of 'Book::price'
+  d:\v1tos\lesson 12 - template class\lesson 12 - template class\source.cpp(50): note: see declaration of 'Book'
+  d:\v1tos\lesson 12 - template class\lesson 12 - template class\source.cpp(25): note: while compiling class template member function 'void CShop<Book>::SortArr(void)'
+  d:\v1tos\lesson 12 - template class\lesson 12 - template class\source.cpp(92): note: see reference to function template instantiation 'void CShop<Book>::SortArr(void)' being compiled
+  d:\v1tos\lesson 12 - template class\lesson 12 - template class\source.cpp(90): note: see reference to class template instantiation 'CShop<Book>' being compiled
