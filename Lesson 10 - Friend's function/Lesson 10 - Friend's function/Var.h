@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <sstream>
 using namespace std;
 
 class Var
@@ -14,6 +16,9 @@ public:
 	Var(double doubleType);
 	Var(string stringType);
 	Var operator+(Var &other);
+	Var operator-(Var &other);
+	Var operator*(Var &other);
+	Var operator/(Var &other);
 	void ShowVar();
 	~Var();
 };

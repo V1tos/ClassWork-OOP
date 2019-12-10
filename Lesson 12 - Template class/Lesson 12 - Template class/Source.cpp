@@ -54,6 +54,8 @@ public:
 
 			delete[] tmp;
 			tmp = nullptr;
+
+
 		
 	};
 	void SortArrMinToMax() {
@@ -90,6 +92,8 @@ public:
 
 		delete[] tmp;
 		tmp = nullptr;
+
+		
 
 	};
 
@@ -335,10 +339,12 @@ int main() {
 	system("pause");
 	cout << "------------Sorted price (max to min)------------\n";
 	m_shop.SortArrMaxToMin();
+	m_shop.ShowArr();
 	cout << "------------Sorted price (max to min)------------\n";
 	system("pause");
 	cout << "------------Sorted price (min to max)------------\n";
 	m_shop.SortArrMinToMax();
+	m_shop.ShowArr();
 	cout << "------------Sorted price (min to max)------------\n";
 	system("pause");
 	m_shop.AveragePrice();

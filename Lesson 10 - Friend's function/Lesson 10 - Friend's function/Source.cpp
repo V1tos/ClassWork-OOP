@@ -49,13 +49,13 @@
 //cout &lt; &lt; c; //отримаємо &quot;12010&quot;
 
 int main() {
-	Var a(10);
-	Var b(2.5);
+	Var a("21");
+	Var b("24");
 	Var c;
 	c=a.operator+(b);
 	c.ShowVar();
 	/*a.ShowVar();*/
-
+	
 
 	system("pause");
 	return 0;

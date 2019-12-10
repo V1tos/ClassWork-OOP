@@ -33,26 +33,163 @@ Var::Var(string stringType)
 Var Var::operator+(Var & other)
 {
 
-	if (this->intType>0&&other.intType==0&&other.stringType=="")
+	if (this->intType!=0&&other.doubleType != 0&& other.intType==0&&other.stringType=="")
 	{
 		
 		return (this->intType + int(other.doubleType));
 		
 	}
+	if (this->intType != 0 && other.intType != 0&& other.doubleType == 0 && other.stringType == "") {
 
+		return (this->intType + other.intType);
+	}
+	if (this->intType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->intType + atoi(other.stringType.c_str()));
+
+	}
+
+
+
+
+	if (this->stringType != "" && other.stringType == "" && other.doubleType == 0&&other.intType!=0 ) {
+		string out_string;
+		stringstream convert;
+		convert << atoi(this->stringType.c_str()) + other.intType;
+		out_string = convert.str();
+
+		return out_string;
+	}
+	
+	if (this->stringType != "" && other.stringType == "" && other.intType == 0 && other.doubleType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) + other.doubleType;
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+	if (this->stringType != "" && other.doubleType == 0 && other.intType == 0 && other.stringType != "") {
+		
+
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) + atof(other.stringType.c_str());
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+
+	if (this->doubleType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "")
+	{
+
+		return (this->doubleType + double(other.intType));
+
+	}
+	if (this->doubleType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "") {
+
+		return (this->doubleType + other.doubleType);
+	}
+	if (this->doubleType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->doubleType + atof(other.stringType.c_str()));
+
+	}
+
+}
+
+Var Var::operator-(Var & other)
+{
+
+	if (this->intType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "")
+	{
+
+		return (this->intType - int(other.doubleType));
+
+	}
+	if (this->intType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "") {
+
+		return (this->intType - other.intType);
+	}
+	if (this->intType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->intType - atoi(other.stringType.c_str()));
+
+	}
+
+
+
+
+	if (this->stringType != "" && other.stringType == "" && other.doubleType == 0 && other.intType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << other.intType;
+		out_string = convert.str();
+
+		return (this->stringType);
+	}
+
+	if (this->stringType != "" && other.stringType == "" && other.intType == 0 && other.doubleType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << other.doubleType;
+		out_string = convert.str();
+
+		return (this->stringType + out_string);
+	}
+
+	if (this->stringType != "" && other.doubleType == 0 && other.intType == 0 && other.stringType != "") {
+
+
+		return (this->stringType + other.stringType);
+	}
+
+
+	if (this->doubleType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "")
+	{
+
+		return (this->doubleType + double(other.intType));
+
+	}
+	if (this->doubleType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "") {
+
+		return (this->doubleType + other.doubleType);
+	}
+	if (this->doubleType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->doubleType + atof(other.stringType.c_str()));
+
+	}
+}
+
+Var Var::operator*(Var & other)
+{
+	return Var();
+}
+
+Var Var::operator/(Var & other)
+{
+	return Var();
 }
 
 void Var::ShowVar()
 {
 	if (this->intType > 0&&this->doubleType==0&&this->stringType=="") {
-		cout << this->intType;
+		
+		cout << "Int - " << this->intType << endl;
 	}
 	else if (this->doubleType > 0 && this->intType == 0 && this->stringType == "") {
-		cout << this->doubleType;
+		cout << "Double - " << this->doubleType << endl;
 	}
 	else
 	{
-		cout << this->stringType;
+		cout << "String - " << this->stringType << endl;
 	}
 }
 
