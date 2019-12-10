@@ -54,7 +54,7 @@ int main() {
 	Var c;
 	c=a.operator+(b);
 	c.ShowVar();
-	a.ShowVar();
+	/*a.ShowVar();*/
 
 
 	system("pause");

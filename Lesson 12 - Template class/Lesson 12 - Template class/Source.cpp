@@ -70,7 +70,7 @@ public:
 			for (int j = this->size-1; j >= 0; j--)
 			{
 				if (tmp[j] < tmp[j - 1]) {
-					swap(tmp[j], tmp[j + 1]);
+					swap(tmp[j], tmp[j - 1]);
 				}
 			}
 		}
@@ -304,24 +304,24 @@ unsigned short AudioDisk::audioDiskCounter = 0;
 int main() {
 	
 
-	CShop <Book> b_shop(3);
-	system("cls");
-	b_shop.ShowArr();
-	system("pause");
-	b_shop.MostExpensiveGoods();
-	b_shop.LeastExpensiveGoods();
-	system("pause");
-	cout << "------------Sorted price (max to min)------------\n";
-	b_shop.SortArrMaxToMin();
-	cout << "------------Sorted price (max to min)------------\n";
-	system("pause");
-	cout << "------------Sorted price (min to max)------------\n";
-	b_shop.SortArrMinToMax();
-	cout << "------------Sorted price (min to max)------------\n";
-	system("pause");
-	b_shop.AveragePrice();
-	system("pause");
-	system("cls");
+	//CShop <Book> b_shop(3);
+	//system("cls");
+	//b_shop.ShowArr();
+	//system("pause");
+	//b_shop.MostExpensiveGoods();
+	//b_shop.LeastExpensiveGoods();
+	//system("pause");
+	//cout << "------------Sorted price (max to min)------------\n";
+	//b_shop.SortArrMaxToMin();
+	//cout << "------------Sorted price (max to min)------------\n";
+	//system("pause");
+	//cout << "------------Sorted price (min to max)------------\n";
+	//b_shop.SortArrMinToMax();
+	//cout << "------------Sorted price (min to max)------------\n";
+	//system("pause");
+	//b_shop.AveragePrice();
+	//system("pause");
+	//system("cls");
 
 
 
@@ -349,22 +349,22 @@ int main() {
 
 
 
-	CShop <AudioDisk> a_shop(3);
-	system("cls");
-	a_shop.ShowArr();
-	system("pause");
-	a_shop.MostExpensiveGoods();
-	a_shop.LeastExpensiveGoods();
-	system("pause");
-	cout << "------------Sorted price (max to min)------------\n";
-	a_shop.SortArrMaxToMin();
-	cout << "------------Sorted price (max to min)------------\n";
-	system("pause");
-	cout << "------------Sorted price (min to max)------------\n";
-	a_shop.SortArrMinToMax();
-	cout << "------------Sorted price (min to max)------------\n";
-	system("pause");
-	a_shop.AveragePrice();
+	//CShop <AudioDisk> a_shop(3);
+	//system("cls");
+	//a_shop.ShowArr();
+	//system("pause");
+	//a_shop.MostExpensiveGoods();
+	//a_shop.LeastExpensiveGoods();
+	//system("pause");
+	//cout << "------------Sorted price (max to min)------------\n";
+	//a_shop.SortArrMaxToMin();
+	//cout << "------------Sorted price (max to min)------------\n";
+	//system("pause");
+	//cout << "------------Sorted price (min to max)------------\n";
+	//a_shop.SortArrMinToMax();
+	//cout << "------------Sorted price (min to max)------------\n";
+	//system("pause");
+	//a_shop.AveragePrice();
 	
 
 

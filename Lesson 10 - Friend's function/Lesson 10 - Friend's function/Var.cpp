@@ -35,9 +35,8 @@ Var Var::operator+(Var & other)
 
 	if (this->intType>0&&other.intType==0&&other.stringType=="")
 	{
-		this->intType = this->intType + int(other.doubleType);
 		
-		return *this;
+		return (this->intType + int(other.doubleType));
 		
 	}
 
