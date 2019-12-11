@@ -50,10 +50,13 @@
 
 int main() {
 	Var a("21");
-	Var b("24");
+	Var b(2.5);
 	Var c;
-	c=a.operator+(b);
+	Var d;
+	c=a.operator-(b);
 	c.ShowVar();
+	d = c.operator/(b);
+	d.ShowVar();
 	/*a.ShowVar();*/
 	
 

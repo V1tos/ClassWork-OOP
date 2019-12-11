@@ -1,6 +1,8 @@
 ﻿  Source.cpp
   Var.cpp
   Generating Code...
+d:\v1tos\lesson 10 - friend's function\lesson 10 - friend's function\var.cpp(257): warning C4715: 'Var::operator*': not all control paths return a value
+d:\v1tos\lesson 10 - friend's function\lesson 10 - friend's function\var.cpp(333): warning C4715: 'Var::operator/': not all control paths return a value
+d:\v1tos\lesson 10 - friend's function\lesson 10 - friend's function\var.cpp(180): warning C4715: 'Var::operator-': not all control paths return a value
 d:\v1tos\lesson 10 - friend's function\lesson 10 - friend's function\var.cpp(103): warning C4715: 'Var::operator+': not all control paths return a value
-d:\v1tos\lesson 10 - friend's function\lesson 10 - friend's function\var.cpp(169): warning C4715: 'Var::operator-': not all control paths return a value
   Lesson 10 - Friend's function.vcxproj -> D:\V1tos\Lesson 10 - Friend's function\Debug\Lesson 10 - Friend's function.exe

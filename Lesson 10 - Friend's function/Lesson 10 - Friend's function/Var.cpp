@@ -118,9 +118,11 @@ Var Var::operator-(Var & other)
 	if (this->intType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
 	{
 
-		return (this->intType - atoi(other.stringType.c_str()));
+		return (this->intType - atof(other.stringType.c_str()));
 
 	}
+
+
 
 
 
@@ -128,54 +130,206 @@ Var Var::operator-(Var & other)
 	if (this->stringType != "" && other.stringType == "" && other.doubleType == 0 && other.intType != 0) {
 		string out_string;
 		stringstream convert;
-		convert << other.intType;
+		convert << atof(this->stringType.c_str()) - other.intType;
 		out_string = convert.str();
 
-		return (this->stringType);
+		return out_string;
 	}
 
 	if (this->stringType != "" && other.stringType == "" && other.intType == 0 && other.doubleType != 0) {
 		string out_string;
 		stringstream convert;
-		convert << other.doubleType;
+		convert << atof(this->stringType.c_str()) - other.doubleType;
 		out_string = convert.str();
 
-		return (this->stringType + out_string);
+		return out_string;
 	}
 
 	if (this->stringType != "" && other.doubleType == 0 && other.intType == 0 && other.stringType != "") {
 
 
-		return (this->stringType + other.stringType);
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) - atof(other.stringType.c_str());
+		out_string = convert.str();
+
+		return out_string;
 	}
+
+
+
+
 
 
 	if (this->doubleType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "")
 	{
 
-		return (this->doubleType + double(other.intType));
+		return (this->doubleType - double(other.intType));
 
 	}
 	if (this->doubleType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "") {
 
-		return (this->doubleType + other.doubleType);
+		return (this->doubleType - other.doubleType);
 	}
 	if (this->doubleType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
 	{
 
-		return (this->doubleType + atof(other.stringType.c_str()));
+		return (this->doubleType - atof(other.stringType.c_str()));
 
 	}
 }
 
 Var Var::operator*(Var & other)
 {
-	return Var();
+
+	if (this->intType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "")
+	{
+
+		return (this->intType * int(other.doubleType));
+
+	}
+	if (this->intType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "") {
+
+		return (this->intType * other.intType);
+	}
+	if (this->intType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->intType * atof(other.stringType.c_str()));
+
+	}
+
+
+
+
+
+
+	if (this->stringType != "" && other.stringType == "" && other.doubleType == 0 && other.intType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) * other.intType;
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+	if (this->stringType != "" && other.stringType == "" && other.intType == 0 && other.doubleType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) * other.doubleType;
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+	if (this->stringType != "" && other.doubleType == 0 && other.intType == 0 && other.stringType != "") {
+
+
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) * atof(other.stringType.c_str());
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+
+
+
+
+
+	if (this->doubleType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "")
+	{
+
+		return (this->doubleType * double(other.intType));
+
+	}
+	if (this->doubleType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "") {
+
+		return (this->doubleType * other.doubleType);
+	}
+	if (this->doubleType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->doubleType * atof(other.stringType.c_str()));
+
+	}
 }
 
 Var Var::operator/(Var & other)
 {
-	return Var();
+	if (this->intType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "")
+	{
+
+		return (this->intType / int(other.doubleType));
+
+	}
+	if (this->intType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "") {
+
+		return (this->intType / other.intType);
+	}
+	if (this->intType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->intType / atof(other.stringType.c_str()));
+
+	}
+
+
+
+
+
+
+	if (this->stringType != "" && other.stringType == "" && other.doubleType == 0 && other.intType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) / other.intType;
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+	if (this->stringType != "" && other.stringType == "" && other.intType == 0 && other.doubleType != 0) {
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) / other.doubleType;
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+	if (this->stringType != "" && other.doubleType == 0 && other.intType == 0 && other.stringType != "") {
+
+
+		string out_string;
+		stringstream convert;
+		convert << atof(this->stringType.c_str()) / atof(other.stringType.c_str());
+		out_string = convert.str();
+
+		return out_string;
+	}
+
+
+
+
+
+
+	if (this->doubleType != 0 && other.intType != 0 && other.doubleType == 0 && other.stringType == "")
+	{
+
+		return (this->doubleType / double(other.intType));
+
+	}
+	if (this->doubleType != 0 && other.doubleType != 0 && other.intType == 0 && other.stringType == "") {
+
+		return (this->doubleType / other.doubleType);
+	}
+	if (this->doubleType != 0 && other.stringType != "" && other.intType == 0 && other.doubleType == 0)
+	{
+
+		return (this->doubleType / atof(other.stringType.c_str()));
+
+	}
 }
 
 void Var::ShowVar()
