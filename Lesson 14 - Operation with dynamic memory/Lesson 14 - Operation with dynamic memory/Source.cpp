@@ -1,173 +1,148 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 
 
-using namespace std;
-//
-//template <typename T>
-//
-//class NodeList
-//{
-//	private:
-//		
-//	template <typename T>
-//	class Container {
-//		
-//
-//	public:
-//		Container *nextContainer;
-//		T data;
-//		Container(T data = T(), Container *nextContainer = nullptr)
-//		{
-//			this->data = data;
-//			this->nextContainer = nextContainer;
-//		};
-//
-//	};
-//
-//	Container <T> *head;
-//	int size;
-//
-//
-//
-//	
-//
-//public:
-//	NodeList()
-//	{
-//		this->head = nullptr;
-//		this->size = 0;
-//	};
-//	int GetSize() {
-//		return this->size;
-//	}
-//	void push(T data) {
-//		if (head == nullptr) {
-//			head = new Container<T>(data);
-//			
-//		}
-//		else
-//		{
-//			Container<T> *current = this->head;
-//			while (current->nextContainer != nullptr)
-//			{
-//				current = current->nextContainer;
-//			}
-//			current->nextContainer = new Container<T>(data);
-//
-//		}
-//		this->size++;
-//		
-//	}
-//	/*~NodeList();*/
-//};
 
+
+//Побудувати клас для роботи з однозв’язним списком.Елемент списку містить наступну інформацію про автобус :
+//
+//номер автобуса;
+//прізвище та ініціали водія;
+//номер маршруту.
+//Програма повинна забезпечувати :
+//початкове формування двох списків :
+//з даними про автобуси, які знаходяться в автопарку;
+//з даними про автобуси, які знаходяться на маршрутах.
+//При виїзді кождого автобуса з парку вводиться номер автобуса, і програма видаляє дані про цей автобус з списку автобусів, які знаходяться в автопарку, та записує ці дані в список автобусів, які знаходяться на маршруті.
+//аналогічна операція виконується для списків, якщо якийсь автобус повертається в автопарк;
+//по запиту видіються відомості про автобуси, які знаходяться в автопарку або на маршруті.
+
+
+using namespace std;
+
+class Bus
+{
+	short number;
+
+public:
+	Bus() {};
+	Bus(short number) {
+		this->number = number;
+	};
+
+	short GetNumber() {
+		return this->number;
+	}
+	void ShowNumber() {
+		cout << this->number << endl;
+	}
+	/*~Bus();*/
+};
 
 
 
 template <typename T>
-class NodeList1
+class BusStation
 {
-
-private:
-
+	private:
+		
 	template <typename T>
-	class Container1 {
-
+	class Container {
+		
 
 	public:
-		Container1 *NextNode;
+		Container *nextBus;
 		T data;
-
-		Container1(T(data) = T(), Container1 *NextNode = nullptr) {
+	
+	
+		Container(T(data) =T(), Container *nextBus = nullptr)
+		{
 			this->data = data;
-			this->NextNode = NextNode;
+			this->nextBus = nextBus;
 		};
 
+		
 		
 
 	};
 
 	
-	Container1<T> *head1;
 
-	int size1;
+	Container <T> *head;
+	int size;
+
+
+
+	
+
 public:
-	NodeList1() {
-		this->head1 = head1;
-		this->size1 = 0;
+	BusStation()
+	{
+		this->head = nullptr;
+		this->size = 0;
 	};
-	void PushData(T data) {
+	int GetSize() {
+		return this->size;
+	}
 
-		if (this->head1 == nullptr) {
-			this->head1 = new Container1<T>(data);
+	void Push(T data) {
+		if (head == nullptr) {
+			head = new Container<T>(data);
+			
 		}
 		else
 		{
-			Container1<T> *current = this->head1;
-			while (current->NextNode!=nullptr)
-			{
-				current = current->NextNode;
-
-			};
-			current->NextNode = new Container1<T>(data);
+			Container<T> *current = this->head;
 			
-		};
-		this->size1++;
+			while (current->nextBus != nullptr)
+			{
+				current = current->nextBus;
+			}
+			current->nextBus = new Container<T>(data);
 
-	};
+		}
+		this->size++;
+		
+	}
+	void ShowData() {
+		Container <T> *current = head;
 
-	int GetSize() {
-		return this->size1;
-	};
+		while (current != nullptr) {
 
+			cout << current->data.GetNumber();
+			current = current->nextBus;
+		}
+
+
+	}
 	void DeleteFirst() {
 
-		Container1<T> *tmp = this->head1;
-		this->head1 = this->head1->NextNode;
-		delete tmp;
-		this->size1--;
+		Container <T> *temp = this->head;
+		this->head = this->head->nextBus;
+		delete temp;
+		size--;
+
+	}
+
+	~BusStation() {
+
+		DeleteFirst();
 	};
-	void ShowData() {
-		
-		Container1<T> *current = this->head1;
-		int counter = 0;
-		while (current !=nullptr)
-		{
-			
-			cout <<"Data " << counter << " - " << current->data  << endl;
-			counter++;
-			current = current->NextNode;
-		};
-
-	};
-
-
-
 };
 
 
 
-int main() {
-	/*NodeList <int> testList;
-	cout <<testList.GetSize();
-	testList.push(4);
-	cout << testList.GetSize();*/
 
-	NodeList1 <int> test;
-	cout << test.GetSize() << endl;
-	test.PushData(3);
-	cout << test.GetSize() << endl;
-	test.DeleteFirst();
-	cout << test.GetSize() << endl;
-	test.PushData(3);
-	test.PushData(6);
-	test.PushData(2);
-	test.PushData(7);
-	test.PushData(8);
-	test.PushData(3);
-	cout << test.GetSize() << endl;
-	test.ShowData();
+
+
+int main() {
+	BusStation <Bus> testList;
+	Bus tmp(4);
+
+	testList.Push(tmp);
+	/*cout << testList.GetSize();*/
+	testList.ShowData();
+
 
 	system("pause");
 	return 0;
