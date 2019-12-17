@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <string>
-
+using namespace std;
 
 
 
@@ -18,62 +18,91 @@
 //по запиту видіються відомості про автобуси, які знаходяться в автопарку або на маршруті.
 
 
-using namespace std;
 
-class Bus
-{
-	short number;
+//
+//class Bus
+//{
+//	unsigned int busNumber;
+//	string driverName;
+//	unsigned int wayNumber;
+//
+//public:
+//	Bus() {};
+//	Bus(unsigned int busNumber, string driverName, unsigned int wayNumber) {
+//		this->busNumber = busNumber;
+//		this->driverName = driverName;
+//		this->wayNumber = wayNumber;
+//
+//	};
+//
+//	short GetNumber() {
+//		return this->busNumber;
+//	}
+//	void ShowInfo() {
+//		cout << "Bus's number: " << this->busNumber <<"\nDriver's name: " <<this->driverName <<"\nWay's number: "<<this->wayNumber << endl;
+//		
+//	}
+//	/*~Bus();*/
+//};
 
-public:
-	Bus() {};
-	Bus(short number) {
-		this->number = number;
-	};
-
-	short GetNumber() {
-		return this->number;
-	}
-	void ShowNumber() {
-		cout << this->number << endl;
-	}
-	/*~Bus();*/
-};
 
 
-
-template <typename T>
+template <typename T1, typename T2, typename T3>
 class BusStation
 {
-	private:
-		
-	template <typename T>
-	class Container {
-		
+private:
+
+
+	/*class Container {
+
 
 	public:
 		Container *nextBus;
 		T data;
-	
-	
+
+
 		Container(T(data) =T(), Container *nextBus = nullptr)
 		{
 			this->data = data;
 			this->nextBus = nextBus;
 		};
 
-		
-		
+
+
+
+	};*/
+
+	template <typename T1, typename T2, typename T3>
+	class Bus
+	{
+	public:
+		Bus *nextBus;
+		T1 data1;
+		T2 data2;
+		T3 data3;
+		Bus(T1 data1, T2 data2, T3 data3, Bus *nextBus = nullptr) {
+			this->data1 = data1;
+			this->data2 = data2;
+			this->data3 = data3;
+			this->nextBus = nextBus;
+		}
+
+
+		Bus() {};
+		/*~Bus() {};*/
 
 	};
 
-	
 
-	Container <T> *head;
+
+
+	/*Container <T> *head;*/
+	Bus <T1, T2, T3> *head;
 	int size;
 
 
 
-	
+
 
 public:
 	BusStation()
@@ -85,44 +114,107 @@ public:
 		return this->size;
 	}
 
-	void Push(T data) {
+	void Push(T1 data1, T2 data2, T3 data3) {
 		if (head == nullptr) {
-			head = new Container<T>(data);
-			
+			head = new Bus <T1, T2, T3>(data1, data2, data3);
+
 		}
 		else
 		{
-			Container<T> *current = this->head;
-			
+			Bus <T1, T2, T3> *current = this->head;
+
 			while (current->nextBus != nullptr)
 			{
 				current = current->nextBus;
 			}
-			current->nextBus = new Container<T>(data);
+			current->nextBus = new Bus <T1, T2, T3>(data1, data2, data3);
 
 		}
 		this->size++;
-		
+
 	}
+
+
+
+
 	void ShowData() {
-		Container <T> *current = head;
+		Bus <T1, T2, T3> *current = head;
+
+		int counter = 0;
 
 		while (current != nullptr) {
-
-			cout << current->data.GetNumber();
+			cout << "Bus N" << counter + 1 << ":\n"
+				<< "Bus's number: " << current->data1 << "\nDriver's name: " << current->data2 << "\nWay's number: " << current->data3 << endl;
 			current = current->nextBus;
+			counter++;
 		}
 
 
 	}
 	void DeleteFirst() {
 
-		Container <T> *temp = this->head;
+		Bus <T1, T2, T3> *temp = this->head;
 		this->head = this->head->nextBus;
 		delete temp;
 		size--;
 
 	}
+
+	void AddFirst(T1 data1, T2 data2, T3 data3) {
+		head = new Bus <T1, T2, T3>(data1, data2, data3, head);
+		this->size++;
+	}
+
+	void RemoveByIndex(const int index) {
+		if ((index - 1) == 0) {
+			DeleteFirst();
+		}
+		else {
+			Bus <T1, T2, T3> *prev = this->head;
+			for (int i = 0; i < index - 1; i++) {
+				prev = prev->NextNode;
+			}
+
+			Bus <T1, T2, T3> *toDel = prev->NextNode;
+			prev->NextNode = toDel->NextNode;
+			delete toDel;
+			size--;
+		}
+
+
+	};
+
+
+	void Transfer(const int index, BusStation <T1,T2,T3> &other) {
+
+		
+
+		if ((index - 1) == 0) {
+			other = head;
+			DeleteFirst();
+			
+
+		}
+		else {
+			Bus <T1, T2, T3> *prev = this->head;
+			for (int i = 0; i < index - 1; i++) {
+				prev = prev->NextNode;
+			}
+
+			Bus <T1, T2, T3> *toDel = prev->NextNode;
+			prev->NextNode = toDel->NextNode;
+			other.AddFirst(toDel.data1, toDel.data2, toDel.data3);
+			/*other.size++;*/
+			delete toDel;
+			this->size--;
+		}
+
+
+	};
+
+
+
+
 
 	~BusStation() {
 
@@ -132,16 +224,92 @@ public:
 
 
 
+//Побудувати клас для роботи з однозв’язним списком.Елемент списку містить наступну інформацію про автобус :
+//
+//номер автобуса;
+//прізвище та ініціали водія;
+//номер маршруту.
+//Програма повинна забезпечувати :
+//початкове формування двох списків :
+//з даними про автобуси, які знаходяться в автопарку;
+//з даними про автобуси, які знаходяться на маршрутах.
+//При виїзді кождого автобуса з парку вводиться номер автобуса, і програма видаляє дані про цей автобус з списку автобусів, які знаходяться в автопарку, та записує ці дані в список автобусів, які знаходяться на маршруті.
+//аналогічна операція виконується для списків, якщо якийсь автобус повертається в автопарк;
+//по запиту видіються відомості про автобуси, які знаходяться в автопарку або на маршруті.
 
+void Menu() {
+
+		system("cls");
+		cout << "-=+-=+-=+-=+-=+-=+-=+-=+MENU-=+-=+-=+-=+-=+-=+-=+-=+\n";
+		cout << "1 - Add bus\n2 - Show buses on parking\n3 - Show busses on way\n0 - Exit\n";
+		cout << "-=+-=+-=+-=+-=+-=+-=+-=+MENU-=+-=+-=+-=+-=+-=+-=+-=+\nYour choice: ";
+
+
+
+}
 
 
 int main() {
-	BusStation <Bus> testList;
-	Bus tmp(4);
+	
+	bool exit = false;
+	
+	BusStation <string, string, int> parkList;
+	BusStation <string, string, int> wayList;
+	
+	string busNumber;
+	string driverName;
+	int wayNumber = 0;
+	int choice = 0;
+	int removeNumber = 0;
 
-	testList.Push(tmp);
-	/*cout << testList.GetSize();*/
-	testList.ShowData();
+	while (!exit)
+	{
+		Menu();
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			cout << "Enter bus's number: ";
+			cin >> busNumber;
+			cout << "Enter driver's name: ";
+			cin >> driverName;
+			cout << "Enter way's number: ";
+			cin >> wayNumber;
+			parkList.Push(busNumber, driverName, wayNumber);
+			break;
+		case 2:
+			system("cls");
+			cout << "-=+-=+-=+-=+-=+Park list-=+-=+-=+-=+-=+\n";
+			parkList.ShowData();
+			cout << "-=+-=+-=+-=+-=+Park list-=+-=+-=+-=+-=+\n";
+			system("pause");
+			break;
+		case 3:
+			
+			cout << "Enter bus's N: ";
+			cin >> removeNumber;
+			parkList.Transfer(removeNumber, wayList);
+		
+			/*parkList.Push(busNumber, driverName, wayNumber);*/
+
+			break;
+		case 0:
+			exit = true;
+			break;
+		default:
+			cout << "Wrong choice!!! Try again.\n";
+			system("pause");
+			break;
+		}
+
+		
+	}
+
+
+	//parkList.Push("AF5645DO", "Alyosha", 156);
+	//parkList.Push("AD5645DO", "Styopa", 156);
+	///*cout << testList.GetSize();*/
+	//parkList.ShowData();
 
 
 	system("pause");
