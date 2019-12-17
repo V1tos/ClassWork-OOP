@@ -187,7 +187,6 @@ public:
 				Bus <T1, T2, T3> *toDel = prev->nextBus;
 				other.AddFirst(toDel->data1, toDel->data2, toDel->data3);
 				prev->nextBus = toDel->nextBus;
-				other.size++;
 				delete toDel;
 				this->size--;
 			}
