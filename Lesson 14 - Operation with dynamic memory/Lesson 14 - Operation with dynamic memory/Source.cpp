@@ -52,26 +52,6 @@ class BusStation
 {
 private:
 
-
-	/*class Container {
-
-
-	public:
-		Container *nextBus;
-		T data;
-
-
-		Container(T(data) =T(), Container *nextBus = nullptr)
-		{
-			this->data = data;
-			this->nextBus = nextBus;
-		};
-
-
-
-
-	};*/
-
 	template <typename T1, typename T2, typename T3>
 	class Bus
 	{
@@ -85,18 +65,17 @@ private:
 			this->data2 = data2;
 			this->data3 = data3;
 			this->nextBus = nextBus;
-		}
-
+		};
 
 		Bus() {};
-		/*~Bus() {};*/
+		~Bus() {};
 
 	};
 
 
 
 
-	/*Container <T> *head;*/
+	
 	Bus <T1, T2, T3> *head;
 	int size;
 
@@ -161,22 +140,22 @@ public:
 	}
 
 	void AddFirst(T1 data1, T2 data2, T3 data3) {
-		head = new Bus <T1, T2, T3>(data1, data2, data3, head);
+		this->head = new Bus <T1, T2, T3>(data1, data2, data3, this->head);
 		this->size++;
 	}
 
 	void RemoveByIndex(const int index) {
-		if ((index - 1) == 0) {
+		if (index == 0) {
 			DeleteFirst();
 		}
 		else {
 			Bus <T1, T2, T3> *prev = this->head;
 			for (int i = 0; i < index - 1; i++) {
-				prev = prev->NextNode;
+				prev = prev->nextBus;
 			}
 
-			Bus <T1, T2, T3> *toDel = prev->NextNode;
-			prev->NextNode = toDel->NextNode;
+			Bus <T1, T2, T3> *toDel = prev->nextBus;
+			prev->nextBus = toDel->nextBus;
 			delete toDel;
 			size--;
 		}
@@ -185,31 +164,39 @@ public:
 	};
 
 
-	void Transfer(const int index, BusStation <T1,T2,T3> &other) {
+	void Transfer(const int index, BusStation &other) {
 
 		
+		
+		if (index < this->size) {
 
-		if ((index - 1) == 0) {
-			other = head;
-			DeleteFirst();
-			
 
-		}
-		else {
-			Bus <T1, T2, T3> *prev = this->head;
-			for (int i = 0; i < index - 1; i++) {
-				prev = prev->NextNode;
+
+			if (index == 0) {
+				other.AddFirst(this->head->data1, this->head->data2, this->head->data3);
+				DeleteFirst();
+
+
 			}
+			else {
+				Bus <T1, T2, T3> *prev = this->head;
+				for (int i = 0; i < index - 1; i++) {
+					prev = prev->nextBus;
+				}
 
-			Bus <T1, T2, T3> *toDel = prev->NextNode;
-			prev->NextNode = toDel->NextNode;
-			other.AddFirst(toDel.data1, toDel.data2, toDel.data3);
-			/*other.size++;*/
-			delete toDel;
-			this->size--;
+				Bus <T1, T2, T3> *toDel = prev->nextBus;
+				other.AddFirst(toDel->data1, toDel->data2, toDel->data3);
+				prev->nextBus = toDel->nextBus;
+				other.size++;
+				delete toDel;
+				this->size--;
+			}
 		}
-
-
+		else
+		{
+			cout << "Wrong index!!\n";
+		}
+		
 	};
 
 
@@ -241,7 +228,7 @@ void Menu() {
 
 		system("cls");
 		cout << "-=+-=+-=+-=+-=+-=+-=+-=+MENU-=+-=+-=+-=+-=+-=+-=+-=+\n";
-		cout << "1 - Add bus\n2 - Show buses on parking\n3 - Show busses on way\n0 - Exit\n";
+		cout << "1 - Add bus\n2 - Show buses on park\n3 - Show busses on way\n4 - Transfer park to way\n5 - Transfer way to park\n0 - Exit\n";
 		cout << "-=+-=+-=+-=+-=+-=+-=+-=+MENU-=+-=+-=+-=+-=+-=+-=+-=+\nYour choice: ";
 
 
@@ -256,6 +243,15 @@ int main() {
 	BusStation <string, string, int> parkList;
 	BusStation <string, string, int> wayList;
 	
+	parkList.Push("AF5645DO", "Alyosha", 156);
+	parkList.Push("BF8745JO", "Styopa", 437);
+	parkList.Push("AF3705FO", "Misha", 850);
+	parkList.Push("AD9999UO", "Kolya", 371);
+
+	wayList.Push("HD9145HO", "Vanya", 171);
+	wayList.Push("AD5613UO", "Vitalik", 784);
+	wayList.Push("KD6767JO", "Volodya", 432);
+
 	string busNumber;
 	string driverName;
 	int wayNumber = 0;
@@ -264,6 +260,9 @@ int main() {
 
 	while (!exit)
 	{
+		
+
+
 		Menu();
 		cin >> choice;
 		switch (choice)
@@ -275,7 +274,9 @@ int main() {
 			cin >> driverName;
 			cout << "Enter way's number: ";
 			cin >> wayNumber;
-			parkList.Push(busNumber, driverName, wayNumber);
+			parkList.AddFirst(busNumber, driverName, wayNumber);
+			cout << "Added to park list" << endl;
+			system("pause");
 			break;
 		case 2:
 			system("cls");
@@ -285,13 +286,45 @@ int main() {
 			system("pause");
 			break;
 		case 3:
-			
-			cout << "Enter bus's N: ";
-			cin >> removeNumber;
-			parkList.Transfer(removeNumber, wayList);
-		
-			/*parkList.Push(busNumber, driverName, wayNumber);*/
-
+			system("cls");
+			cout << "-=+-=+-=+-=+-=+Way list-=+-=+-=+-=+-=+\n";
+			wayList.ShowData();
+			cout << "-=+-=+-=+-=+-=+Way list-=+-=+-=+-=+-=+\n";
+			system("pause");
+			break;
+		case 4:
+			system("cls");
+			if (parkList.GetSize() > 0) {
+				cout << "-=+-=+-=+-=+-=+Park list-=+-=+-=+-=+-=+\n";
+				parkList.ShowData();
+				cout << "-=+-=+-=+-=+-=+Park list-=+-=+-=+-=+-=+\n";
+				cout << "Enter bus's N: ";
+				cin >> removeNumber;
+				parkList.Transfer(removeNumber - 1, wayList);
+				cout << "Transfered to way list\n";
+			}
+			else
+			{
+				cout << "Empty list!\n";
+			}
+			system("pause");
+			break;
+		case 5:
+			system("cls");
+			if (wayList.GetSize() > 0) {
+				cout << "-=+-=+-=+-=+-=+Way list-=+-=+-=+-=+-=+\n";
+				wayList.ShowData();
+				cout << "-=+-=+-=+-=+-=+Way list-=+-=+-=+-=+-=+\n";
+				cout << "Enter bus's N: ";
+				cin >> removeNumber;
+				wayList.Transfer(removeNumber - 1, parkList);
+				cout << "Transfered to park list\n";
+			}
+			else
+			{
+				cout << "Empty list!\n";
+			}
+			system("pause");
 			break;
 		case 0:
 			exit = true;
@@ -304,12 +337,6 @@ int main() {
 
 		
 	}
-
-
-	//parkList.Push("AF5645DO", "Alyosha", 156);
-	//parkList.Push("AD5645DO", "Styopa", 156);
-	///*cout << testList.GetSize();*/
-	//parkList.ShowData();
 
 
 	system("pause");
