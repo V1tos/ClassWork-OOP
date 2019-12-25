@@ -1,5 +1,7 @@
 ﻿#include <iostream>
 #include <ctime>
+#include <string>
+
 
 using namespace std;
 
@@ -18,13 +20,174 @@ using namespace std;
 
 class Unit
 {
-private:
-	int hp;
-	int damage;
-	int dodge;
+	
+
+public:
+	string name;
+	short hp;
+	unsigned short damage;
+	unsigned short dodge;
+	
+	Unit() {
+		this->name = "Unit";
+		this->hp = this->hp;
+		this->damage = this->damage;
+		this->dodge = this->dodge;
+	};
+	Unit(short hp, short damage, short dodge) {
+		this->name = "Unit";
+		this->hp = hp;
+		this->damage = damage;
+		this->dodge = dodge;
+	}
+	template <typename T>
+	void Attack(T &other) {
+		short chance = rand() % 10 + 1;
+		if (chance > other.dodge) {
+			other.hp -= this->damage;
+			cout <<this->name << " attacked " <<other.name <<endl;
+		}
+		else
+		{
+			cout << this->name << " dodged " << other.name << endl;
+		}
+	};
+	void ShowInfo() {
+		if (this->hp > 0) {
+			cout << "Name: " << this->name << "\nHP: " << this->hp  << endl;
+		}
+		else
+		{
+			cout << "Name: " << this->name << " - Dead" << endl;
+		}
+	}
+	/*~Unit();*/
+	
 };
 
+class Swordsman : public Unit
+{
+
+public:
+	
+	Swordsman() {
+		this->name = "Swordsman";
+		this->hp = 15;
+		this->damage = 5;
+		this->dodge = 6;
+	}
+	/*~Swordsman();*/
+
+};
+
+class Archer : public Unit
+{
+
+public:
+
+	Archer() {
+		this->name = "Archer";
+		this->hp = 12;
+		this->damage = 4;
+		this->dodge = 4;
+	}
+	/*~Archer();*/
+
+};
+
+class Mage : public Unit
+{
+
+public:
+
+	Mage() {
+		this->name = "Mage";
+		this->hp = 8;
+		this->damage = 10;
+		this->dodge = 3;
+	}
+	/*~Mage();*/
+
+};
+
+
+
+
+
+void FillArr(Unit *arr,int size) {
+	for (int i = 0; i < size; i++)
+	{
+		short tmp = rand() %3 + 1;
+
+		if (tmp == 1) { arr[i] = Swordsman(); }
+		else if (tmp == 2) { arr[i] = Archer(); }
+		else { arr[i] = Mage(); }
+	}
+	
+
+};
+
+void ShowArr(Unit *arr, int size) {
+	for (int i = 0; i < size; i++)
+	{
+		cout << "*****************\n";
+		cout << "Unit " << i + 1 << ":\n";
+		arr[i].ShowInfo();
+		cout << "*****************\n";
+	}
+}
+
+
+void ArrAttack(Unit *arr1, Unit *arr2, int size) {
+
+	for (int i = 0; i < size; i++)
+	{
+		if (arr1[i].hp>0&&arr2[i].hp>0)
+		{
+			arr1[i].Attack(arr2[i]);
+		}
+
+	}
+
+}
+
 int main() {
+	srand(unsigned(time(NULL)));
+
+	
+	Unit *arr1 = new Unit[3];
+	Unit *arr2 = new Unit[3];
+	/*arr[0] = Swordsman();
+	arr[1] = Mage();
+	arr[2] = Archer();*/
+	
+	FillArr(arr1, 3);
+	FillArr(arr2, 3);
+
+
+	cout << "----------ARRAY - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------ARRAY - 1-----------\n\n";
+	
+	cout << "----------ARRAY - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------ARRAY - 2-----------\n\n";
+	
+
+	cout << "Attacks array 1:\n";
+	ArrAttack(arr1, arr2, 3);
+	cout << "Attacks array 2:\n";
+	ArrAttack(arr2, arr1, 3);
+
+	cout << "----------ARRAY - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------ARRAY - 1-----------\n\n";
+
+	cout << "----------ARRAY - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------ARRAY - 2-----------\n\n";
+
+
 
 
 
