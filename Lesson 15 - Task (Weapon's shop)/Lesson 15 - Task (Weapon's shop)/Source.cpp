@@ -18,78 +18,43 @@ using namespace std;
 //Автомат вистрелив кулю 5, і промахнувся.
 //Автомат вистрелив кулю 6, і влучив.
 
+class Automatic {
+	private:
 
-
-class Magazine
-{
-	
-private:
-	class Bullet
+	class Magazine
 	{
-		static unsigned int counter;
 
-	public:
-		Bullet *nextBullet;
-		unsigned int bulletID;
-		
-		
-		Bullet(Bullet *nextBullet=nullptr) 
+	private:
+		class Bullet
 		{
-			counter++;
-			this->bulletID = counter;
-			this->nextBullet = nextBullet;
-			
-		};
-		void ShowBullet() {
-			cout << "Bullet N" << bulletID;
-		}
+			static unsigned int counter;
 
-		~Bullet() {};
+		public:
+			Bullet *nextBullet;
+			unsigned int bulletID;
 
-	};
 
-	
-	Bullet *head;
-	short magazineSize;
-	short bulletsCount;
-	void ChargeMagazine() {
-		
-		while (bulletsCount < magazineSize)
-		{
-
-			if (this->head == nullptr) {
-				this->head = new Bullet;
-				bulletsCount++;
-			}
-			else
+			Bullet(Bullet *nextBullet = nullptr)
 			{
-				Bullet *current = this->head;
-				while (current->nextBullet != nullptr)
-				{
-					current = current->nextBullet;
-				}
-				current->nextBullet = new Bullet;
-				bulletsCount++;
+				counter++;
+				this->bulletID = counter;
+				this->nextBullet = nextBullet;
 
+			};
+			void ShowBullet() {
+				cout << "Bullet N" << bulletID;
 			}
 
-		}
+			~Bullet() {};
+
+		};
 
 
-	}
+		Bullet *head;
+		short magazineSize;
+		short bulletsCount;
+		void ChargeMagazine() {
 
-
-public:
-	Magazine() { 
-		this->head = nullptr;
-		this->bulletsCount = 0;
-		this->magazineSize = 30;
-		this->ChargeMagazine();
-		
-	};
-	void RechargeMagazine() {
-		if (bulletsCount < magazineSize-1) {
-			
 			while (bulletsCount < magazineSize)
 			{
 
@@ -110,66 +75,201 @@ public:
 				}
 
 			}
-		}
-		else
-		{
-			cout << "Magazine has been full charged\n";
-		}
-	
-		
-		
-	}
 
-	void GiveBullet(int index) {
-		if (index-1 == 0) {
+
+		}
+
+
+	public:
+		Magazine() {
+			this->head = nullptr;
+			this->bulletsCount = 0;
+			this->magazineSize = 30;
+			this->ChargeMagazine();
+
+		};
+		void RechargeMagazine() {
+			if (bulletsCount < magazineSize) {
+
+				while (bulletsCount < magazineSize)
+				{
+
+					if (this->head == nullptr) {
+						this->head = new Bullet;
+						bulletsCount++;
+					}
+					else
+					{
+						Bullet *current = this->head;
+						while (current->nextBullet != nullptr)
+						{
+							current = current->nextBullet;
+						}
+						current->nextBullet = new Bullet;
+						bulletsCount++;
+
+					}
+
+				}
+				cout << "Magazine has been successfully recharched\n";
+			}
+			else
+			{
+				cout << "Magazine has been already charged\n";
+			}
+
+
+
+		}
+
+		void GiveBullet(int index) {
+			
+				if (index - 1 == 0) {
+					Bullet *tmp = this->head;
+					this->head = this->head->nextBullet;
+					cout << "Bullet N" << tmp->bulletID;
+					delete tmp;
+					bulletsCount--;
+				}
+				else {
+					Bullet  *prev = this->head;
+					for (int i = 0; i < index - 2; i++) {
+						prev = prev->nextBullet;
+					}
+
+					Bullet  *toDel = prev->nextBullet;
+					prev->nextBullet = toDel->nextBullet;
+					cout << "Bullet N" << toDel->bulletID;
+					delete toDel;
+					bulletsCount--;
+				}
+			
+			
+			
+		}
+
+		void ShowInfo() {
+			Bullet *current = this->head;
+
+			cout << "All bullets: " << this->bulletsCount << endl;
+			while (current != 0)
+			{
+				current->ShowBullet(); cout << endl;
+				current = current->nextBullet;
+			}
+		}
+
+		short GetBulletsCount() {
+			return this->bulletsCount;
+		}
+		~Magazine() {
+		
 			Bullet *tmp = this->head;
 			this->head = this->head->nextBullet;
 			delete tmp;
 			bulletsCount--;
-		}
-		else {
-			Bullet  *prev = this->head;
-			for (int i = 0; i < index - 2; i++) {
-				prev = prev->nextBullet;
-			}
+		};
 
-			Bullet  *toDel = prev->nextBullet;
-			prev->nextBullet = toDel->nextBullet;
-			delete toDel;
-			bulletsCount--;
-		}
-	}
 
-	void ShowInfo() {
-		Bullet *current = this->head;
 
-		while (current!=0)
-		{
-			current->ShowBullet(); cout << endl;
-			current = current->nextBullet;
-		}
-	}
-	~Magazine() {};
+
+
+
+	};
+
+	Magazine magazine;
+	unsigned short engageChance;
 	
+	public:
+		Automatic() {
+			this->engageChance = 7;
+		}
+		void Shot() {
+			if (this->magazine.GetBulletsCount() > 0) {
+				unsigned short chance = rand() % 10 + 1;
+				unsigned short randBullet = rand() % (this->magazine.GetBulletsCount()) + 1;
+				this->magazine.GiveBullet(randBullet);
+				if (chance <= this->engageChance)
+				{
+					cout << " engaged\n";
+				}
+				else
+				{
+					cout << " didn't engage\n";
+				}
+			}
+			else
+			{
+				cout << "Magazine is empty!\n";
+			}
+			
+
+		}
+		void Recharging() {
+			this->magazine.RechargeMagazine();
+		}
+		void ShowMagazine() {
+
+			this->magazine.ShowInfo();
+		}
 
 
-
-
-
+		~Automatic() {};
 };
 
-unsigned int Magazine::Bullet::counter = 0;
+unsigned int Automatic::Magazine::Bullet::counter = 0;
+
+
+void Menu() {
+
+	cout << "1 - Shot\n2 - Show information about magazine\n3 - Recharching\n0 - Exit\nYour choice: ";
+}
 
 
 int main() {
 	srand(unsigned(time(NULL)));
-	int a = rand() % 29 + 1;
+
 	
-	Magazine maga;
-	maga.GiveBullet(a);
-	/*maga.ShowInfo();*/
-	/*maga.ChargeMagazine();*/
-	/*maga.ShowInfo();*/
+	Automatic ak47;
+
+	int choice = 0;
+	bool exit = false;
+	while (!exit)
+	{
+		system("cls");
+		Menu();
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			system("cls");
+			ak47.Shot();
+			system("pause");
+			break;
+		case 2:
+			system("cls");
+			ak47.ShowMagazine();
+			system("pause");
+			break;
+		case 3:
+			system("cls");
+			ak47.Recharging();
+			system("pause");
+			break;
+		case 0:
+			system("cls");
+			exit = true;
+			break;
+		default:
+			system("cls");
+			cout << "Wrong choice!! Try again.\n";
+			system("pause");
+			break;
+		}
+
+	}
+	
+
 	
 
 
