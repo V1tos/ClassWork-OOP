@@ -1,1 +1,1 @@
-https://github.com/V1tos/ClassWork-OOP/tree/master/Lesson%2014%20-%20Operation%20with%20dynamic%20memory/Lesson%2014%20-%20Operation%20with%20dynamic%20memory
+https://github.com/V1tos/ClassWork-OOP/blob/master/Lesson%2015%20-%20Task%20(Weapon's%20shop)/Lesson%2015%20-%20Task%20(Weapon's%20shop)/Source.cpp
