@@ -21,12 +21,25 @@ using namespace std;
 class Unit
 {
 	
-
-public:
 	string name;
 	short hp;
 	unsigned short damage;
 	unsigned short dodge;
+public:
+	/*string name;
+	short hp;
+	unsigned short damage;
+	unsigned short dodge;*/
+
+	string GetName()                      { return this->name; }
+	short  GetHp()                        { return this->hp; }
+	unsigned short GetDamage()            { return this->damage; }
+	unsigned short GetDodge()             { return this->dodge; }
+
+	void SetName(string name)             { this->name = name; }
+	void SetHp(short hp)                  { this->hp = hp; }
+	void SetDamage(unsigned short damage) { this->damage = damage; }
+	void SetDodge(unsigned short dodge)   { this->dodge = dodge; }
 	
 	Unit() {
 		this->name = "Unit";
@@ -61,7 +74,7 @@ public:
 			cout << "Name: " << this->name << " - Dead" << endl;
 		}
 	}
-	/*~Unit();*/
+	~Unit() {};
 	
 };
 
@@ -71,10 +84,11 @@ class Swordsman : public Unit
 public:
 	
 	Swordsman() {
-		this->name = "Swordsman";
-		this->hp = 15;
-		this->damage = 5;
-		this->dodge = 6;
+		SetName("Swordsman");
+		SetHp(15);
+		SetDamage(5);
+		SetDodge(6);
+		
 	}
 	/*~Swordsman();*/
 
@@ -86,12 +100,12 @@ class Archer : public Unit
 public:
 
 	Archer() {
-		this->name = "Archer";
-		this->hp = 12;
-		this->damage = 4;
-		this->dodge = 4;
+		SetName("Archer");
+		SetHp(12);
+		SetDamage(4);
+		SetDodge(4);
 	}
-	/*~Archer();*/
+	~Archer() {};
 
 };
 
@@ -101,12 +115,13 @@ class Mage : public Unit
 public:
 
 	Mage() {
-		this->name = "Mage";
-		this->hp = 8;
-		this->damage = 10;
-		this->dodge = 3;
+		SetName("Mage");
+		SetHp(8);
+		SetDamage(10);
+		SetDodge(3);
+		
 	}
-	/*~Mage();*/
+	~Mage() {};
 
 };
 
@@ -119,9 +134,9 @@ void FillArr(Unit *arr,int size) {
 	{
 		short tmp = rand() %3 + 1;
 
-		if (tmp == 1) { arr[i] = Swordsman(); }
-		else if (tmp == 2) { arr[i] = Archer(); }
-		else { arr[i] = Mage(); }
+		if (tmp == 1)      { arr[i] = Swordsman(); }
+		else if (tmp == 2) { arr[i] = Archer();    }
+		else               { arr[i] = Mage();      }
 	}
 	
 
@@ -139,15 +154,54 @@ void ShowArr(Unit *arr, int size) {
 
 
 void ArrAttack(Unit *arr1, Unit *arr2, int size) {
+	
 
 	for (int i = 0; i < size; i++)
 	{
-		if (arr1[i].hp>0&&arr2[i].hp>0)
+		
+		if (arr1[i].GetHp() >0&&arr2[i].GetHp() >0)
 		{
-			arr1[i].Attack(arr2[i]);
+			cout << "Unit " << i + 1 << " "; arr1[i].Attack(arr2[i]);
+		}
+		else if (arr1[i].GetHp() > 0 && arr2[i].GetHp() <= 0&& arr2[i+1].GetHp() >0&&i<size-1)
+		{
+			cout << "Unit " << i + 1 << " "; arr1[i].Attack(arr2[i+1]);
 		}
 
 	}
+
+}
+
+void Attacks(Unit *arr1, Unit *arr2, int size) {
+
+	if (arr1[0].GetHp() > 0 || arr1[1].GetHp() > 0 || arr1[2].GetHp() > 0 /*&& arr2[0].GetHp() > 0 || arr2[1].GetHp() > 0 || arr2[2].GetHp() > 0*/) {
+		cout << "Attacks team 1:\n";
+		ArrAttack(arr1, arr2, 3);
+	}
+	else if (arr1[0].GetHp() <= 0 || arr1[1].GetHp() <= 0 || arr1[2].GetHp() <= 0)
+	{
+		cout << "All team 1 is dead!\n";
+	}
+	else if (arr2[0].GetHp() <= 0 || arr2[1].GetHp() <= 0 || arr2[2].GetHp() <= 0)
+	{
+		cout << "All enemies are dead!\n";
+	}
+	cout << "\n\n\n";
+
+	if (arr2[0].GetHp() > 0 || arr2[1].GetHp() > 0 || arr2[2].GetHp() > 0 /*&& arr1[0].GetHp() > 0 || arr1[1].GetHp() > 0 || arr1[2].GetHp() > 0*/) {
+		cout << "Attacks team 2:\n";
+		ArrAttack(arr2, arr1, 3);
+	}
+	else if (arr2[0].GetHp() <= 0 || arr2[1].GetHp() <= 0 || arr2[2].GetHp() <= 0)
+	{
+		cout << "All team 2 is dead!\n";
+	}
+	else if (arr1[0].GetHp() <= 0 || arr1[1].GetHp() <= 0 || arr1[2].GetHp() <= 0)
+	{
+		cout << "All enemies are dead!\n";
+	}
+
+
 
 }
 
@@ -165,28 +219,87 @@ int main() {
 	FillArr(arr2, 3);
 
 
-	cout << "----------ARRAY - 1-----------\n";
+	cout << "----------TEAM - 1-----------\n";
 	ShowArr(arr1, 3);
-	cout << "----------ARRAY - 1-----------\n\n";
+	cout << "----------TEAM - 1-----------\n\n";
 	
-	cout << "----------ARRAY - 2-----------\n";
+	cout << "----------TEAM - 2-----------\n";
 	ShowArr(arr2, 3);
-	cout << "----------ARRAY - 2-----------\n\n";
+	cout << "----------TEAM - 2-----------\n\n";
 	
 
-	cout << "Attacks array 1:\n";
-	ArrAttack(arr1, arr2, 3);
-	cout << "Attacks array 2:\n";
-	ArrAttack(arr2, arr1, 3);
+	Attacks(arr1, arr2, 3);
 
-	cout << "----------ARRAY - 1-----------\n";
+	
+	cout << "----------TEAM - 1-----------\n";
 	ShowArr(arr1, 3);
-	cout << "----------ARRAY - 1-----------\n\n";
+	cout << "----------TEAM - 1-----------\n\n";
 
-	cout << "----------ARRAY - 2-----------\n";
+	cout << "----------TEAM - 2-----------\n";
 	ShowArr(arr2, 3);
-	cout << "----------ARRAY - 2-----------\n\n";
+	cout << "----------TEAM - 2-----------\n\n";
 
+
+	Attacks(arr1, arr2, 3);
+
+
+	cout << "----------TEAM - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------TEAM - 1-----------\n\n";
+
+	cout << "----------TEAM - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------TEAM - 2-----------\n\n";
+
+	Attacks(arr1, arr2, 3);
+
+
+	cout << "----------TEAM - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------TEAM - 1-----------\n\n";
+
+	cout << "----------TEAM - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------TEAM - 2-----------\n\n";
+
+	Attacks(arr1, arr2, 3);
+
+
+	cout << "----------TEAM - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------TEAM - 1-----------\n\n";
+
+	cout << "----------TEAM - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------TEAM - 2-----------\n\n";
+
+	Attacks(arr1, arr2, 3);
+
+
+	cout << "----------TEAM - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------TEAM - 1-----------\n\n";
+
+	cout << "----------TEAM - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------TEAM - 2-----------\n\n";
+
+	Attacks(arr1, arr2, 3);
+
+
+	cout << "----------TEAM - 1-----------\n";
+	ShowArr(arr1, 3);
+	cout << "----------TEAM - 1-----------\n\n";
+
+	cout << "----------TEAM - 2-----------\n";
+	ShowArr(arr2, 3);
+	cout << "----------TEAM - 2-----------\n\n";
+
+
+
+
+
+	
 
 
 
