@@ -1,1 +1,1 @@
-https://github.com/V1tos/ClassWork-OOP/blob/master/Lesson%2015%20-%20Task%20(Weapon's%20shop)/Lesson%2015%20-%20Task%20(Weapon's%20shop)/Source.cpp
+https://github.com/V1tos/ClassWork-OOP/blob/master/Lesson%2017%20-%20Inheritance/Lesson%2017%20-%20Inheritance/Unit.cpp
