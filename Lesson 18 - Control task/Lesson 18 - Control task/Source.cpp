@@ -49,7 +49,7 @@ class Notepad
 			
 		};
 		Database() {
-
+			
 		};
 		
 		void ShowData() {
@@ -216,25 +216,51 @@ public:
 	void ShowInfo() {
 		Database *current = this->head;
 		int iterator = 0;
-		while (current!=nullptr)
+		if (current !=nullptr)
 		{
-			cout << "Profile N" << iterator + 1 << endl;
-			current->ShowData();
-			current = current->nextData;
-			iterator++;
+			while (current != nullptr)
+			{
+				cout << "Profile N" << iterator + 1 << endl;
+				current->ShowData();
+				current = current->nextData;
+				iterator++;
 
+			}
 		}
+		
 
 	};
 
 	void WriteFile() {
 		
+		
 		ofstream writeFile;
-		writeFile.open("Test.txt",ios::app);
+		writeFile.open("Test.txt", ios::out | ios::binary);
+		
+		writeFile.write((char *)&this->head->nextData, sizeof(Database));
 
+		writeFile.write((char *)&this->head, sizeof(Database));
+		
 	
+		/*if (!writeFile.is_open()) {
+			cout << "Can't open file!\n";
+		}
+		else
+		{
+			Database *current = this->head;
 
-		writeFile.write((char*)&this->head, sizeof(this->head));
+			while (current==nullptr)
+			{
+				writeFile.write((char *)&current, sizeof(Database));
+				cout << endl;
+				current = current->nextData;
+
+			}
+			
+
+		}*/
+
+		
 
 		
 
@@ -244,21 +270,31 @@ public:
 	void ReadFile() {
 		
 		ifstream readFile;
-		readFile.open("Test.txt", ios::in);
+		readFile.open("Test.txt", ios::in | ios::binary);
+		
+
+		
+		Database *nextData; /*= new Database();*/
+		
+		/*this->head = new Database();*/
+
+		/*while (readFile.eof())
+		{
+			readFile.read((char *)&this->head, sizeof(Database));
+		}*/
 
 		
 		
 
-
-		readFile.read((char*)&this->head, sizeof(this->head));
-
+		readFile.read((char *)&nextData, sizeof(Database));
+		
+		readFile.read((char *)&this->head, sizeof(Database));
+		
+		this->head->nextData = nextData;
 	
-		
+		readFile.close();
 
-		while (!readFile.eof()) {
-			
-			readFile.read((char*)&this->head, sizeof(this->head));
-		}
+		
 
 
 		
@@ -275,6 +311,10 @@ public:
 
 int main() {
 	Notepad noteList;
+
+	//noteList.AddProfile();
+	//noteList.WriteFile();
+
 	noteList.ReadFile();
 	noteList.ShowInfo();
 
