@@ -1,2 +1,11 @@
 ﻿  Unit.cpp
-  Lesson 17 - Inheritance.vcxproj -> D:\V1tos\Lesson 17 - Inheritance\Debug\Lesson 17 - Inheritance.exe
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(124): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(259): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(286): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(319): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(325): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(340): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(342): warning C4804: '>': unsafe use of type 'bool' in operation
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(280): warning C4715: 'CheckLive': not all control paths return a value
+d:\шаг\програмування\class task(oop)\lesson 17 - inheritance\lesson 17 - inheritance\unit.cpp(143): warning C4715: 'Unit::CheckBrother': not all control paths return a value
+  Lesson 17 - Inheritance.vcxproj -> D:\ШАГ\Програмування\Class Task(OOP)\Lesson 17 - Inheritance\Debug\Lesson 17 - Inheritance.exe
