@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -24,33 +25,26 @@ using namespace std;
 class Notepad
 {
 
-
-	class Database
-	{
-		
-
+	
+	
 	public:
 		string companyName;
 		string owner;
 		unsigned int telephoneNumber;
 		string address;
 		string occupation;
-		Database *nextData;
-
-
-		Database(string companyName, string owner, unsigned int telephoneNumber, string address, string occupation) {
-			this->nextData = nullptr;
-			this->address = address;
+		
+		Notepad(string companyName, string owner, unsigned int telephoneNumber, string address, string occupation) {
 			this->companyName = companyName;
-			this->occupation = occupation;
-			this->telephoneNumber = telephoneNumber;
 			this->owner = owner;
-
+			this->telephoneNumber = telephoneNumber;
+			this->address = address;
+			this->occupation = occupation;
+		};
+		Notepad() {
 			
 		};
-		Database() {
-			
-		};
+		
 		
 		void ShowData() {
 			cout << "Company's name:      " << this->companyName << endl;
@@ -59,26 +53,25 @@ class Notepad
 			cout << "Address:             " << this->address << endl;
 			cout << "Occupation:          " << this->occupation << endl;
 		}
-		~Database() {};
+
+		
+		string GetCompanyName()        { return this->companyName; }
+		string GetOwner()              { return this->owner; }
+		int GetTelephoneNumber()       { return this->telephoneNumber; }
+		string GetCompanyAddres()      { return this->companyName; }
+		string GetCompanyOccupation()  { return this->companyName; }
+
+
+		~Notepad() {};
 
 	};
 
 	
 	
 
-	
 
-	Database *head;
-	int size = 0;
-public:
-	
 
-	Notepad() {
-		this->head = nullptr;
-		this->size = 0;
-	};
-
-	void AddProfile() {
+	vector <Notepad> AddProfile(vector <Notepad> &list) {
 		
 		string companyName;
 		string owner;
@@ -86,11 +79,11 @@ public:
 		string address;
 		string occupation;
 
-		cout << "Profile N" << this->size + 1 <<":" << endl;
+
+		cout << "Profile N" << list.size()+1 <<":" << endl;
 		cout << "Enter company's name: ";
-		cin >> companyName;
+		getline(cin, companyName);
 		cout << "Enter owner's name: ";
-		cin.ignore();
 		getline(cin, owner);
 		cout << "Enter telephone's number: ";
 		cin >> telephoneNumber;
@@ -100,165 +93,116 @@ public:
 		cout << "Enter occupation: ";
 		cin >> occupation;
 
-		if (this->head == nullptr) {
-			this->head = new Database(companyName,owner, telephoneNumber, address, occupation);
-			this->size++;
-		}
-		else
-		{
-			Database *current = this->head;
-			while (current->nextData != nullptr) {
-				current = current->nextData;
-			}
-			current->nextData = new Database(companyName, owner, telephoneNumber, address, occupation);
-			this->size++;
+		list.push_back(Notepad(companyName, owner, telephoneNumber, address, occupation));
 
-
-		}
-
+		return list;
 		
 	};
 
-	void FindCompanyName() {
-		Database *current = this->head;
-		int iterator = 0;
+	void FindCompanyName(vector <Notepad> &list) {
+		
 		string companyName;
 		cout << "Enter company's name: ";
 		cin >> companyName;
-		while (current != nullptr)
+		for (int i = 0; i < list.size(); i++)
 		{
-			if (current->companyName == companyName) {
-				cout << "Profile N" << iterator + 1 << endl;
-				current->ShowData();
-			}
-			current = current->nextData;
-			iterator++;
-
+			if (list.at(i).GetCompanyName() == companyName) list.at(i).ShowData();
 		}
 
 	}
 
-	void FindOwner() {
-		Database *current = this->head;
-		int iterator = 0;
+	void FindOwner(vector <Notepad> &list) {
+		
 		string owner;
 		cout << "Enter owner: ";
 		cin >> owner;
-		while (current != nullptr)
+		for (int i = 0; i < list.size(); i++)
 		{
-			if (current->owner == owner) {
-				cout << "Profile N" << iterator + 1 << endl;
-				current->ShowData();
-			}
-			current = current->nextData;
-			iterator++;
-
+			if (list.at(i).GetOwner() == owner) list.at(i).ShowData();
 		}
-
+		
 	}
-	void FindTelephoneNumber() {
-		Database *current = this->head;
-		int iterator = 0;
+	void FindTelephoneNumber(vector <Notepad> &list) {
+		
 		unsigned int telephoneNumber=0;
 		cout << "Enter telephone's number: ";
 		cin >> telephoneNumber;
-		while (current != nullptr)
-		{
-			if (current->telephoneNumber == telephoneNumber) {
-				cout << "Profile N" << iterator + 1 << endl;
-				current->ShowData();
+	
+			for (int i = 0; i < list.size(); i++)
+			{
+				if (list.at(i).GetTelephoneNumber() == telephoneNumber) list.at(i).ShowData();
 			}
-			current = current->nextData;
-			iterator++;
-
-		}
 
 	}
 
-	void FindAddress() {
-		Database *current = this->head;
-		int iterator = 0;
+	void FindAddress(vector <Notepad> &list) {
+		
 		string address;
 		cout << "Enter addres: ";
 		cin >> address;
-		while (current != nullptr)
+		for (int i = 0; i < list.size(); i++)
 		{
-			if (current->address == address) {
-				cout << "Profile N" << iterator + 1 << endl;
-				current->ShowData();
-			}
-			current = current->nextData;
-			iterator++;
-
+			if (list.at(i).GetCompanyAddres() == address) list.at(i).ShowData();
 		}
 
 	}
 
-	void FindOccupation() {
-		Database *current = this->head;
-		int iterator = 0;
+	void FindOccupation(vector <Notepad> &list) {
+		
 		string occupation;
 		cout << "Enter occupation: ";
 		cin >> occupation;
-		while (current != nullptr)
+		
+		for (int i = 0; i < list.size(); i++)
 		{
-			if (current->occupation == occupation) {
-				cout << "Profile N" << iterator + 1 << endl;
-				current->ShowData();
-			}
-			current = current->nextData;
-			iterator++;
-
+			if (list.at(i).GetCompanyOccupation() == occupation) list.at(i).ShowData();
 		}
-
 	}
 
-	void ShowInfo() {
-		Database *current = this->head;
-		int iterator = 0;
-		if (current !=nullptr)
-		{
-			while (current != nullptr)
-			{
-				cout << "Profile N" << iterator + 1 << endl;
-				current->ShowData();
-				current = current->nextData;
-				iterator++;
-
-			}
-		}
+	void ShowInfo(vector <Notepad> &list) {
 		
+		
+		for (int i = 0; i < list.size(); i++)
+		{
+			cout << "Data N" << i + 1 << ":\n";
+			list.at(i).ShowData();
+		}
 
 	};
 
-	void WriteFile() {
-		
-		
-		ofstream writeFile;
-		writeFile.open("Test.txt", ios::out | ios::binary);
-		
-		writeFile.write((char *)&this->head->nextData, sizeof(Database));
+	std::ostream& operator<<(std::ostream& os, const Notepad& v)
+	{
+		os << v.companyName << " " << v.owner << " " << v.telephoneNumber << v.address << " " << v.occupation << " " << endl;
+		return os;
+	}
 
-		writeFile.write((char *)&this->head, sizeof(Database));
+	std::istream& operator>>(std::istream& is, Notepad& v)
+	{
+		is >> v.companyName >> v.owner >> v.telephoneNumber >> v.address >> v.occupation;
+		return is;
+	}
+
+
+	void WriteFile(vector <Notepad> &list) {
 		
-	
-		/*if (!writeFile.is_open()) {
+		
+		
+		ofstream writeFile("Test.txt" ,ios::binary | ios::out );
+
+		
+		 
+
+
+		if (!writeFile.is_open()) {
 			cout << "Can't open file!\n";
 		}
 		else
 		{
-			Database *current = this->head;
-
-			while (current==nullptr)
-			{
-				writeFile.write((char *)&current, sizeof(Database));
-				cout << endl;
-				current = current->nextData;
-
-			}
-			
-
-		}*/
+			int size = list.size();
+			writeFile.write((const char*)&size, 4);
+			writeFile.write((const char*)&list[0], size * sizeof(Notepad));
+				
+		}
 
 		
 
@@ -267,62 +211,62 @@ public:
 		writeFile.close();
 	}
 
-	void ReadFile() {
-		
-		ifstream readFile;
-		readFile.open("Test.txt", ios::in | ios::binary);
-		
-
-		
-		Database *nextData; /*= new Database();*/
-		
-		/*this->head = new Database();*/
-
-		/*while (readFile.eof())
-		{
-			readFile.read((char *)&this->head, sizeof(Database));
-		}*/
-
-		
-		
-
-		readFile.read((char *)&nextData, sizeof(Database));
-		
-		readFile.read((char *)&this->head, sizeof(Database));
-		
-		this->head->nextData = nextData;
 	
+
+	void ReadFile(vector <Notepad> &list) {
+
+
+		
+		 
+		ifstream readFile("Test.txt",ios::binary);
+		
+		
+	
+
+		if (!readFile.is_open()) {
+			cout << "Can't open file!\n";
+		}
+		else
+		{
+
+			int size = 0;
+			readFile.read((char*)&size, 4);
+			list.resize(size);
+			readFile.read((char*)&list[0], size * sizeof(Notepad));
+
+
+
+		
+		}
+		
+
+		
 		readFile.close();
 
 		
-
-
 		
 
 	}
 
-	~Notepad() {};
 
-};
+
+
 
 
 
 
 
 int main() {
-	Notepad noteList;
+	
 
-	//noteList.AddProfile();
-	//noteList.WriteFile();
+	vector <Notepad> list;
+	
+	/*list=AddProfile(list);
+	WriteFile(list);*/
 
-	noteList.ReadFile();
-	noteList.ShowInfo();
+	ReadFile(list);
 
-	/*noteList.AddProfile();
-	noteList.WriteFile();*/
-	/*noteList.AddProfile();*/
-	/*noteList.FindCompanyName();
-	noteList.ShowInfo();*/
+	ShowInfo(list);
 
 
 	system("pause");
