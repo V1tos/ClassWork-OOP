@@ -1,0 +1,5 @@
+﻿  Source.cpp
+d:\exam\exam_work\exam\exam\source.cpp(86): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\exam\exam_work\exam\exam\source.cpp(156): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\exam\exam_work\exam\exam\source.cpp(225): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Exam.vcxproj -> D:\Exam\Exam_Work\Exam\x64\Debug\Exam.exe
