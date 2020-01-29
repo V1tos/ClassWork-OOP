@@ -1,0 +1,6 @@
+﻿  Source.cpp
+d:\шаг\програмування\class task(oop)\lesson 23 - control task (exchanging tickets)\lesson 23 - control task (exchanging tickets)\source.cpp(92): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 23 - control task (exchanging tickets)\lesson 23 - control task (exchanging tickets)\source.cpp(158): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 23 - control task (exchanging tickets)\lesson 23 - control task (exchanging tickets)\source.cpp(227): warning C4018: '<': signed/unsigned mismatch
+d:\шаг\програмування\class task(oop)\lesson 23 - control task (exchanging tickets)\lesson 23 - control task (exchanging tickets)\source.cpp(79): warning C4715: 'Flat::operator==': not all control paths return a value
+  Lesson 23 - Control task (Exchanging tickets).vcxproj -> D:\ШАГ\Програмування\Class Task(OOP)\Lesson 23 - Control task (Exchanging tickets)\Debug\Lesson 23 - Control task (Exchanging tickets).exe
