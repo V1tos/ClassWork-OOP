@@ -7,21 +7,64 @@ using namespace std;
 
 
 class Vehicle {
+
 	string name;
-	map <string, string> parts;
+	string bodyGabarites;
+	string engineCapacity;
+	string wheelsDiameter;
+	string colourOutside;
+	string salonAppartaments;
+
 public:
+
 	Vehicle(string name = "car") : name(name) {};
-	void SetPart(const string &key, const string &value) { 
-		this->parts[key] = value; }
-	Vehicle GetPart(const string&key) {
-		return this->parts.at(key);
+
+
+	void SetBodyGabarites(string bodyGabarites) {
+		this->bodyGabarites = bodyGabarites;
+	}
+	string GetBodyGabarites() {
+		return bodyGabarites;
+	}
+
+
+	void SetEngineCapacity(string engineCapacity) {
+		this->engineCapacity = engineCapacity;
+	}
+	string GetEngineCapacity() {
+		return engineCapacity;
+	}
+
+	void SetWheelsDiameter(string wheelsDiameter) {
+		this->wheelsDiameter = wheelsDiameter;
+	}
+	string GetWheelsDiameter() {
+		return wheelsDiameter;
+	}
+
+	void SetColourOutside(string colourOutside) {
+		this->colourOutside = colourOutside;
+	}
+	string GetColourOutside() {
+		return colourOutside;
+	}
+
+
+	void SetSalonAppartaments(string salonAppartaments) {
+		this->salonAppartaments = salonAppartaments;
+	}
+	Vehicle GetSalonAppartaments() {
+		return salonAppartaments;
+	}
+
+	
+	string GetName() {
+		return name;
 	}
 	void Show(){
-		cout << "Name: " << name << endl;
-		for (auto el : parts)
-		{
-			cout << el.first << ": " << el.second << endl;
-		}
+		cout << "Name: " << name << "\nBody: " << bodyGabarites << "\nEngine: " << engineCapacity << "\nWheels: " << wheelsDiameter << "\nColour: " << colourOutside
+			<< "\nSalon: " << salonAppartaments << endl;
+		
 	}
 	~Vehicle() {};
 };
@@ -32,7 +75,7 @@ protected:
 	Vehicle *vehicle;
 public:
 	AutoTechnology() {
-		this->vehicle = new Vehicle();
+		vehicle = new Vehicle();
 	}
 	Vehicle *GetVehicle() { 
 		return vehicle;
@@ -42,7 +85,7 @@ public:
 	virtual void InstallWheels() = 0;
 	virtual void Paint() = 0;
 	virtual void PrepareSalon() = 0;
-	~AutoTechnology() { delete this->vehicle; }
+	~AutoTechnology() { delete vehicle; }
 
 };
 
@@ -50,70 +93,88 @@ class MiniAutoTechnology : public AutoTechnology
 {	
 public:
 	MiniAutoTechnology() { 
-		this->vehicle = new Vehicle("Mini auto"); 
-	}
-	void  BuildBody() override { 
-		this->vehicle->SetPart("Body", "Length - 2.3m   Height - 1.5m    Weight - 2 t. "); 
-	}
-	void  InstallEngine() override { 
-		this->vehicle->SetPart("Engine", "1,6 l.");
-	}
-	void  InstallWheels() override { 
-		this->vehicle->SetPart("Wheels", "35 sm."); 
-	}
-	void  Paint() override { 
-		this->vehicle->SetPart("Colour", "White"); 
-	}
-	void  PrepareSalon() override { 
-		this->vehicle->SetPart("Salon", "Leather interior, air conditioning, 4 seater");
+		vehicle = new Vehicle("Mini auto"); 
 	}
 
+	void  BuildBody() override { 
+		vehicle->SetBodyGabarites("Length - 2.3m   Height - 1.5m    Weight - 2 t. "); 
+	}
+	void  InstallEngine() override { 
+		vehicle->SetEngineCapacity("1,6 l.");
+	}
+	void  InstallWheels() override { 
+		vehicle->SetWheelsDiameter("35 sm."); 
+	}
+	void  Paint() override { 
+		vehicle->SetColourOutside("White"); 
+	}
+	void  PrepareSalon() override { 
+		vehicle->SetSalonAppartaments("Leather interior, air conditioning, 4 seater");
+	}
 };
+
 
 class SportsCarTechnology : public AutoTechnology
 {
 public:
-	SportsCarTechnology() { this->vehicle = new Vehicle("Sport's car"); }
-	void  BuildBody() override { 
-		this->vehicle->SetPart("Body", "Length - 2.0m   Height - 1.3m    Weight - 1,2 t. "); 
-	}
-	void  InstallEngine() override { 
-		this->vehicle->SetPart("Engine", "2,5 l."); 
-	}
-	void  InstallWheels() override { 
-		this->vehicle->SetPart("Wheels", "30 sm."); 
-	}
-	void  Paint() override { 
-		this->vehicle->SetPart("Colour", "Red"); 
-	}
-	void  PrepareSalon() override { 
-		this->vehicle->SetPart("Salon", "Leather interior, navigator, 2 seater"); 
+	SportsCarTechnology() {
+		vehicle = new Vehicle("Sport's car"); 
 	}
 
+	void  BuildBody() override {
+		vehicle->SetBodyGabarites("Length - 2.0m   Height - 1.3m    Weight - 1,2 t.");
+	}
+	void  InstallEngine() override {
+		vehicle->SetEngineCapacity("2,5 l.");
+	}
+	void  InstallWheels() override {
+		vehicle->SetWheelsDiameter("30 sm.");
+	}
+	void  Paint() override {
+		vehicle->SetColourOutside("Red");
+	}
+	void  PrepareSalon() override {
+		vehicle->SetSalonAppartaments("Leather interior, navigator, 2 seater");
+	}
 };
+
 
 class SUVTechnology : public AutoTechnology
 {
 public:
 	SUVTechnology() {
-		this->vehicle = new Vehicle("SUV");
-	}
-	void  BuildBody() override {
-		this->vehicle->SetPart("Body", "Length - 3.3m   Height - 2.1m    Weight - 5 t. ");
-	}
-	void  InstallEngine() override {
-		this->vehicle->SetPart("Engine", "3,2 l.");
-	}
-	void  InstallWheels() override {
-		this->vehicle->SetPart("Wheels", "45 sm.");
-	}
-	void  Paint() override {
-		this->vehicle->SetPart("Colour", "Black");
-	}
-	void  PrepareSalon() override {
-		this->vehicle->SetPart("Salon", "Leather interior, Cruise control, air conditioning, 5 seater");
+		vehicle = new Vehicle("SUV");
 	}
 
+	void  BuildBody() override {
+		vehicle->SetBodyGabarites("Length - 3.3m   Height - 2.1m    Weight - 5 t.");
+	}
+	void  InstallEngine() override {
+		vehicle->SetEngineCapacity("3,2 l.");
+	}
+	void  InstallWheels() override {
+		vehicle->SetWheelsDiameter("45 sm.");
+	}
+	void  Paint() override {
+		vehicle->SetColourOutside("Black");
+	}
+	void  PrepareSalon() override {
+		vehicle->SetSalonAppartaments("Leather interior, Cruise control, air conditioning, 6 seater");
+	}
+};
+
+
+
+class Director
+{
+public:
+	void CreateAuto(AutoTechnology * vehicleBuild) {
+		vehicleBuild->BuildBody();
+		vehicleBuild->InstallEngine();
+		vehicleBuild->InstallWheels();
+		vehicleBuild->Paint();
+		vehicleBuild->PrepareSalon();
+	}
 };
 
 enum Technologies
@@ -128,7 +189,7 @@ AutoTechnology* ChoiceTechnology(int ueserChoice) {
 	switch (ueserChoice)
 	{
 	case MINI_AUTO:
-		return new MiniAutoTechnology();
+		return  new MiniAutoTechnology();
 		break;
 	case SPORTS_CAR:
 		return new SportsCarTechnology();
@@ -144,33 +205,14 @@ AutoTechnology* ChoiceTechnology(int ueserChoice) {
 }
 
 
-
-class Director
-{
-public:
-	void CreateAuto(AutoTechnology * vehicleBuild) {
-		vehicleBuild->BuildBody();
-		vehicleBuild->InstallEngine();
-		vehicleBuild->InstallWheels();
-		vehicleBuild->Paint();
-		vehicleBuild->PrepareSalon();
-	}
-};
-Director CreateDirector();
-
-
-void BuildAuto(AutoTechnology* autoTechnology) {
-	 CreateDirector().CreateAuto(autoTechnology);
-};
-
-Director CreateDirector() {
-	Director *director = new Director();
-	return *director;
+void BuildAuto(Director *director, AutoTechnology* autoTechnology) {
+	 director->CreateAuto(autoTechnology);
 };
 
 
 void AddToPark(vector <AutoTechnology*> &autoPark, AutoTechnology* &autoTechnology) {
 	autoPark.push_back(autoTechnology);
+	cout << "Added " << autoTechnology->GetVehicle()->GetName() << endl;
 };
 
 void ShowPark(vector <AutoTechnology*> &autoPark) {
@@ -198,7 +240,9 @@ void DeletePark(vector <AutoTechnology*> &autoPark) {
 int main() {
 
 	vector <AutoTechnology*> autoPark;
-	
+	Director *director = new Director();
+	AutoTechnology* autoTechnology;
+
 	int userChoice = 0;
 	while (true)
 	{
@@ -207,9 +251,10 @@ int main() {
 		cin >> userChoice;
 		if (ChoiceTechnology(userChoice))
 		{
-			AutoTechnology* autoTechnology = ChoiceTechnology(userChoice);
-			BuildAuto(autoTechnology);
+			autoTechnology = ChoiceTechnology(userChoice);
+			BuildAuto(director, autoTechnology);
 			AddToPark(autoPark, autoTechnology);
+			system("pause");
 		}
 		else if(userChoice==4)
 		{
