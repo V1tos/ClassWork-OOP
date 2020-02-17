@@ -62,8 +62,8 @@ public:
 		return name;
 	}
 	void Show(){
-		cout << "Name: " << name << "\nBody: " << bodyGabarites << "\nEngine: " << engineCapacity << "\nWheels: " << wheelsDiameter << "\nColour: " << colourOutside
-			<< "\nSalon: " << salonAppartaments << endl;
+		cout << "Name:   " << name << "\nBody:   " << bodyGabarites << "\nEngine: " << engineCapacity << "\nWheels: " << wheelsDiameter << "\nColour: " << colourOutside
+			<< "\nSalon:  " << salonAppartaments << endl;
 		
 	}
 	~Vehicle() {};
