@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 
@@ -196,6 +197,7 @@ public:
 		
 	}
 
+
 	bool CheckClient(string inputName, string inputSurname) {
 		for (auto client : clientsData) {
 			if (client.GetName() == inputName && client.GetSurname() == inputSurname)
@@ -220,6 +222,7 @@ public:
 				return client.GetAccount();
 			}
 		}
+		
 	}
 
 	void ShowClient() {
@@ -287,13 +290,14 @@ void CreateClientInBank(Bank &bank) {
 
 
 
-void CashOut(Bank &bank, int inputAccountNumber);
-void ShowAccountBalance(Bank &bank, int accountNumber);
+void CashOut(Bank &bank, int inputAccountNumber, ATM* &atmProxy);
+void ShowAccountBalance(Bank &bank, int accountNumber, ATM* &atmProxy);
 
 void ATMmanagement(Bank &bank) {
 	system("cls");
 	bool ATMexit = false;
 	int inputAccountNumber = 0, inputAccountPassword=0, clientChoice = 0;
+	ATM* atmProxy;
 
 	cout << "Enter your account's number: ";
 	cin >> inputAccountNumber;
@@ -312,12 +316,12 @@ void ATMmanagement(Bank &bank) {
 			{
 			case 1:
 				system("cls");
-				CashOut(bank, inputAccountNumber);
+				CashOut(bank, inputAccountNumber, atmProxy);
 				system("pause");
 				break;
 			case 2:
 				system("cls");
-				ShowAccountBalance(bank, inputAccountNumber);
+				ShowAccountBalance(bank, inputAccountNumber, atmProxy);
 				system("pause");
 				break;
 			case 0:
@@ -339,7 +343,7 @@ void ATMmanagement(Bank &bank) {
 }
 
 
-void CashOut(Bank &bank, int inputAccountNumber) {
+void CashOut(Bank &bank, int inputAccountNumber, ATM* &atmProxy) {
 	int inputCashValue = 0;
 	int inputAccountPassword;
 	cout << "Enter your password: ";
@@ -350,8 +354,8 @@ void CashOut(Bank &bank, int inputAccountNumber) {
 
 	if (clientAccount)
 	{
-		ATM* Proxy = new ATM(clientAccount, inputAccountPassword);
-		Proxy->CashATMminus();
+		atmProxy = new ATM(clientAccount, inputAccountPassword);
+		atmProxy->CashATMminus();
 	}
 	else
 	{
@@ -360,7 +364,7 @@ void CashOut(Bank &bank, int inputAccountNumber) {
 }
 
 
-void ShowAccountBalance(Bank &bank,int accountNumber) {
+void ShowAccountBalance(Bank &bank, int accountNumber, ATM* &atmProxy) {
 	int accountPassword;
 	cout << "Enter your password: ";
 	cin >> accountPassword;
@@ -369,16 +373,21 @@ void ShowAccountBalance(Bank &bank,int accountNumber) {
 
 	if (clientAccount)
 	{
-		ATM* Proxy = new ATM(clientAccount, accountPassword);
-		Proxy->ShowBalance();
+		atmProxy = new ATM(clientAccount, accountPassword);
+		atmProxy->ShowBalance();
 	}
 	
 }
 
 
 
+void DeleteBank(Bank &bank) {
 
-
+	for (auto client : bank.GetClientsData())
+	{
+		delete client.GetAccount();
+	}
+}
 
 
 
@@ -409,7 +418,7 @@ int main() {
 			break;
 		}
 	}
-	
+	DeleteBank(privat);
 
 	system("pause");
 	return 0;
