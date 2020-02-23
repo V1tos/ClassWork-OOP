@@ -1,57 +1,54 @@
 ﻿#include <iostream>
 #include <string>
 #include <Windows.h>
+#include "Date.h"
 using namespace std;
 
 //Реализуйте с использованием паттернов проектирования простейшую систему планирования задач.
 //Должна быть возможность создания списка дел, установки приоритетов, установки дат выполнения, удаление и изменения дел.
 //Каждому делу можно установить тег.Список дел можно загружать и сохранять в файл.
 //Необходимо реализовать возможность поиска конкретного дела.Критерии поиска : по датам, по тегам, по приоритету и так далее.
-
-class Date
-{
-	short day;
-	short month;
-	short year;
-public:
-	Date() {};
-	Date(short day, short month, short year) {
-		CheckDate(day, month);
-		this->day = day;
-		this->month = month;
-		this->year = year;
-	}
-
-	void CheckDate(short day, short month) {
-		if (day > 31)
-			day = 31;
-		if (month > 12)
-			month = 12;
-	}
-
-	bool operator>(Date &date) {
-		return TotalDays() > date.TotalDays();
-	}
-
-	int TotalDays() {
-		return day + month * 30 + year * 12 * 30;
-	}
-
-	void SetDate(short day, short month, short year) {
-		this->day = day;
-		this->month = month;
-		this->year = year;
-	}
-	Date GetDate() {
-		return *this;
-	}
-
-	void ShowDate() {
-		cout << day << "." << month << "." << year << endl;
-	}
-	~Date() {};
-
-};
+//
+//class Date
+//{
+//	const short DAYS_IN_MONTH = 31;
+//	const short MONTHS_IN_YEAR = 12;
+//	const short MIN_YEAR = 2020;
+//	const short MAX_YEAR = 2100;
+//	short day;
+//	short month;
+//	short year;
+//
+//public:
+//	Date() {};
+//	Date(short day, short month, short year) {
+//		this->day = day;
+//		this->month = month;
+//		this->year = year;
+//	}
+//
+//	bool CheckDate(short inputDay, short inputMonth, short inputYear) {
+//		return (inputDay <= DAYS_IN_MONTH && inputMonth <= MONTHS_IN_YEAR && inputYear >= MIN_YEAR && inputYear <= MAX_YEAR);	
+//	}
+//
+//
+//	void SetDate(short day, short month, short year) {
+//		this->day = day;
+//		this->month = month;
+//		this->year = year;
+//	}
+//
+//	Date GetDate() {
+//		return *this;
+//	}
+//
+//
+//	void ShowDate() {
+//		cout << day << "." << month << "." << year << endl;
+//	}
+//	~Date() {};
+//
+//};
 
 enum Teg
 {
@@ -64,19 +61,13 @@ class Case
 {
 protected:
 	string name;
-	int priority;
-	Date dateDone;
+	Date *executeDate;
 	string teg;
-	static int globalPriority;
-
 public:
 	Case() {};
-	Case(Date &dateDone) {
-		this->name = "Case";
-	};
-
-	void SetTeg(int state) {
-		switch (state)
+	
+	void SetTeg(int inputTeg) {
+		switch (inputTeg)
 		{
 		case PLANED:
 			teg = "Planned";
@@ -88,6 +79,7 @@ public:
 			teg = "Done";
 			break;
 		default:
+			cout << "Wrong teg!\n";
 			break;
 		}
 
@@ -97,19 +89,20 @@ public:
 
 	virtual ~Case() {};
 	virtual void Execute() = 0;
-	virtual void Project() = 0;
 };
 
 class CaseReboot : public Case
 {
 public:
 	CaseReboot() {};
-	CaseReboot(Date &dateDone) {
-		this->name = "Reboot system";
+	CaseReboot(){
+		name = "Reboot System";
+		SetTeg(PLANED);
+		executeDate = new Date();
 	};
-	~CaseReboot();
-
-private:
+	~CaseReboot() override {
+		delete executeDate;
+	};
 
 };
 
@@ -124,13 +117,19 @@ class CaseProject
 };
 
 
+
+
+
 int main() {
-	Date date(20, 6, 2020);
+	Date *date = new Date(20, 6, 2020);
 
-	Date date1(25, 8, 2020);
 
-	system("IPconfig");
-	system("Start-Sleep");
+	cout << CheckDate(14, 12, 2021);
+	int a = DONE;
+	
+	/*Date date1(25, 8, 2020);*/
+
+	
 
 	system("pause");
 	return 0;

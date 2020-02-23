@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
-#include <fstream>
 using namespace std;
 
 
@@ -15,8 +14,9 @@ using namespace std;
 
 
 
+
 __interface IAccount
-{	
+{
 public:
 	void ShowBalance() = 0;
 	void CashMinus(int inputCashValue) = 0;
@@ -37,16 +37,14 @@ public:
 		cashBalance = 1000;
 	}
 
+
 	int GetNumber() {
 		return accountNumber;
 	}
 
-	void ShowBalance() {
-		cout << "Your sum on account: " << cashBalance <<" UAh" << endl;
-	}
 
 	void CashMinus(int inputCashValue) {
-		if (inputCashValue <= cashBalance)
+		if (IsEnoughBalance(inputCashValue))
 		{
 			cashBalance -= inputCashValue;
 			cout << "Keep your money\n";
@@ -58,18 +56,28 @@ public:
 	}
 
 
-	bool CheckPassword(int inputAccountNumber) {
-		if (accountPassword == inputAccountNumber)
-			return true;
-		return false;
+	bool IsEnoughBalance(int inputCashValue) {
+		return cashBalance >= inputCashValue;
 	}
 
 
 	bool CheckNumberAndPassword(int inputAccountNumber, int inputAccountPassword) {
-		if(accountPassword == inputAccountPassword &&accountNumber == inputAccountNumber)
-			return true;
-		return false;
+		return CheckNumber(inputAccountNumber) && CheckPassword(inputAccountPassword);
 	}
+
+	bool CheckNumber(int inputAccountNumber) {
+		return accountNumber == inputAccountNumber;
+	}
+
+	bool CheckPassword(int inputAccountPassword) {
+		return accountPassword == inputAccountPassword;
+	}
+
+
+	void ShowBalance() {
+		cout << "Your sum on account: " << cashBalance << " UAh" << endl;
+	}
+
 	~Account() {};
 
 };
@@ -82,35 +90,39 @@ class ATM : public IAccount
 protected:
 	Account * account;
 	int inputPassword;
-	
-	bool CheckAccountPassword(){
+
+	bool CheckAccountPassword() {
 		return (account->CheckPassword(inputPassword));
 	}
 public:
 	ATM() {};
-	ATM(Account * account,int inputPassword){
+	ATM(Account * account, int inputPassword) {
 		this->account = account;
 		this->inputPassword = inputPassword;
 	};
 
-	void ShowBalance(){
+	void ShowBalance() {
 		if (CheckAccountPassword())
 			account->ShowBalance();
 		else
 			cout << "Wrong password\n";
 	}
 
-
-	void CashATMminus() {
+	void CashATMMinus() {
 		if (CheckAccountPassword()) {
-			int inputCashValue = 0;
-			cout << "Enter your sum: ";
-			cin >> inputCashValue;
-			account->CashMinus(inputCashValue);
+			
+			account->CashMinus(InputCash());
 		}
 		else {
 			cout << "Wrong password\n";
 		}
+	}
+
+	int InputCash() {
+		int inputCashValue = 0;
+		cout << "Enter your sum: ";
+		cin >> inputCashValue;
+		return inputCashValue;
 	}
 
 	void CashMinus(int inputCashValue) {
@@ -125,8 +137,9 @@ public:
 	~ATM() {
 		delete account;
 	}
-	
+
 };
+
 
 
 class Client
@@ -136,7 +149,7 @@ class Client
 	Account* account;
 
 public:
-	Client(string name, string surname, Account* account) : name(name), surname(surname),account(account) {};
+	Client(string name, string surname) : name(name), surname(surname){};
 
 	string GetName() {
 		return name;
@@ -145,24 +158,42 @@ public:
 		return surname;
 	}
 
-
 	Account* GetAccount() {
-		if (account != nullptr)
-			return account;
-		else
-			cout << "You don't have opening account!!\n";
-			return 0;	
-	}	
+		return account;
+	}
 
+
+	void SetAccount(Account* otherAccount) {
+		account = otherAccount;
+	}
+
+	bool IsOpenAccount() {
+		return (account!=nullptr);
+	}
+
+	
+	bool operator == (Client &otherClient){ 
+		return (name == otherClient.name && surname == otherClient.surname);
+	}
+
+	bool CheckAccountNumber(Client &otherClient) {
+		return (account->GetNumber() == otherClient.account->GetNumber());
+	}
 	void ShowClient() {
 		cout << "Name: " << name << " " << surname << endl;
 		cout << "Account's number: " << account->GetNumber() << endl;
 	}
 
-	~Client() {};
+	void DeleteAccount() {
+		delete account;
+	}
+
+	~Client() {}
 
 
 };
+
+
 
 class Bank
 {
@@ -177,30 +208,19 @@ public:
 	}
 
 
-	void AddClientAndCreateAccount(string clientName, string clientSurname) {
-		if (!CheckClient(clientName, clientSurname))
-		{
-			int accountNumber = rand() % 9999999 + 1000000;
-			int accountPassword = 0;
-			cout << "Your account's number: " << accountNumber << endl;
-			cout << "Create your personal password (ex. 3423): ";
-			cin >> accountPassword;
-
-			clientsData.push_back(Client(clientName, clientSurname, new Account(accountNumber, accountPassword)));
-			cout << "Client added and client's account has created.\n";
-		}
-		else
-		{
-			cout << "Client " << clientName << " " << clientSurname << " has already created!\n";
-		}
-
-		
+	void AddClient(Client newClient) {
+		clientsData.push_back(newClient);
+		cout << "Client added and client's account has been created.\n";
 	}
 
+	Account* CreateAccount(int number, int password) {
+		return new Account(number, password);
+	}
+	
 
-	bool CheckClient(string inputName, string inputSurname) {
+	bool CheckClientByName(Client &otherClient) {
 		for (auto client : clientsData) {
-			if (client.GetName() == inputName && client.GetSurname() == inputSurname)
+			if (client.operator==(otherClient))
 				return true;
 		}
 		return false;
@@ -210,19 +230,24 @@ public:
 		for (auto client : clientsData) {
 			if (client.GetAccount()->CheckNumberAndPassword(inputAccountNumber, inputAccountPassword))
 				return true;
-		}	
+		}
 		return false;
 	}
 
 	Account* GetClientAccountByNumber(int inputAccountNumber) {
 		for (auto client : clientsData)
 		{
-			if (client.GetAccount()->GetNumber() == inputAccountNumber)
-			{
+			if (client.GetAccount()->CheckNumber(inputAccountNumber))
 				return client.GetAccount();
-			}
 		}
-		
+	}
+
+	void SetChangesAccount(Account* editAccount) {
+		for (auto client : clientsData)
+		{
+			if (client.GetAccount()->CheckNumber(editAccount->GetNumber()))
+				client.SetAccount(editAccount);
+		}
 	}
 
 	void ShowClient() {
@@ -234,15 +259,23 @@ public:
 			cout << endl;
 		}
 	}
-	~Bank() {};
+	~Bank() {
+		while (clientsData.size())
+		{
+			clientsData.pop_back();
+		}
+	};
 
 };
 
 
 
 
-void CreateClientInBank(Bank &bank);
 
+
+void CreateClientInBank(Bank &bank);
+void OpenBankAccount(Bank &bank, Client &newClient);
+Account* RegisterAccount(Bank &bank);
 
 void BankManagement(Bank &bank) {
 	int choice = 0;
@@ -278,27 +311,59 @@ void BankManagement(Bank &bank) {
 
 }
 
+
+
+
 void CreateClientInBank(Bank &bank) {
 	string clientName, clientSurname;
 	cout << "Enter your name: ";
 	cin >> clientName;
 	cout << "Enter your surname: ";
 	cin >> clientSurname;
-	bank.AddClientAndCreateAccount(clientName, clientSurname);
+
+	Client *newClient = new Client(clientName, clientSurname);
+	
+
+	if (!bank.CheckClientByName(*newClient))
+	{
+		OpenBankAccount(bank, *newClient);
+		delete newClient;
+	}
+	else
+	{
+		cout << "Client " << clientName << " " << clientSurname << " has already created!\n";
+		delete newClient;
+	}
+	
+}
+
+void OpenBankAccount(Bank &bank, Client &newClient) {
+	Account *newAccount = RegisterAccount(bank);
+	newClient.SetAccount(newAccount);
+
+	bank.AddClient(newClient);
 }
 
 
+Account* RegisterAccount(Bank &bank) {
+
+	int accountNumber = rand() % 9999999 + 1000000;
+	cout << "Client account's number: " << accountNumber << endl;
+	int accountPassword = 0;
+	cout << "Enter personal password (ex. 3423): ";
+	cin >> accountPassword;
+
+	return bank.CreateAccount(accountNumber, accountPassword);
+}
 
 
-void CashOut(Bank &bank, int inputAccountNumber, ATM* &atmProxy);
-void ShowAccountBalance(Bank &bank, int accountNumber, ATM* &atmProxy);
+void CashOut(ATM* &atmProxy, Account* &clientAccount);
+void ShowAccountBalance(ATM* &atmProxy, Account* &clientAccount);
 
 void ATMmanagement(Bank &bank) {
 	system("cls");
-	bool ATMexit = false;
-	int inputAccountNumber = 0, inputAccountPassword=0, clientChoice = 0;
-	ATM* atmProxy;
-
+	int inputAccountNumber = 0, inputAccountPassword=0;
+	
 	cout << "Enter your account's number: ";
 	cin >> inputAccountNumber;
 	cout << "Enter your password: ";
@@ -306,6 +371,11 @@ void ATMmanagement(Bank &bank) {
 
 	if (bank.CheckATMlogin(inputAccountNumber, inputAccountPassword))
 	{
+		Account* clientAccount = bank.GetClientAccountByNumber(inputAccountNumber);
+		ATM* atmProxy;
+		bool ATMexit = false;
+		int clientChoice = 0;
+
 		while (!ATMexit)
 		{
 			system("cls");
@@ -316,15 +386,16 @@ void ATMmanagement(Bank &bank) {
 			{
 			case 1:
 				system("cls");
-				CashOut(bank, inputAccountNumber, atmProxy);
+				CashOut(atmProxy, clientAccount);
 				system("pause");
 				break;
 			case 2:
 				system("cls");
-				ShowAccountBalance(bank, inputAccountNumber, atmProxy);
+				ShowAccountBalance(atmProxy, clientAccount);
 				system("pause");
 				break;
 			case 0:
+				bank.SetChangesAccount(clientAccount);
 				ATMexit = true;
 				break;
 			default:
@@ -343,50 +414,23 @@ void ATMmanagement(Bank &bank) {
 }
 
 
-void CashOut(Bank &bank, int inputAccountNumber, ATM* &atmProxy) {
-	int inputCashValue = 0;
-	int inputAccountPassword;
+void CashOut(ATM* &atmProxy, Account* &clientAccount) {
+	int inputAccountPassword=0;
 	cout << "Enter your password: ";
 	cin >> inputAccountPassword;
 
-
-	Account* clientAccount = bank.GetClientAccountByNumber(inputAccountNumber);
-
-	if (clientAccount)
-	{
-		atmProxy = new ATM(clientAccount, inputAccountPassword);
-		atmProxy->CashATMminus();
-	}
-	else
-	{
-		cout << "Wrong account's password!\n";
-	}
+	atmProxy = new ATM(clientAccount, inputAccountPassword);
+	atmProxy->CashATMMinus();
 }
 
 
-void ShowAccountBalance(Bank &bank, int accountNumber, ATM* &atmProxy) {
-	int accountPassword;
+void ShowAccountBalance(ATM* &atmProxy, Account* &clientAccount) {
+	int inputAccountPassword=0;
 	cout << "Enter your password: ";
-	cin >> accountPassword;
+	cin >> inputAccountPassword;
 
-	Account* clientAccount = bank.GetClientAccountByNumber(accountNumber);
-
-	if (clientAccount)
-	{
-		atmProxy = new ATM(clientAccount, accountPassword);
-		atmProxy->ShowBalance();
-	}
-	
-}
-
-
-
-void DeleteBank(Bank &bank) {
-
-	for (auto client : bank.GetClientsData())
-	{
-		delete client.GetAccount();
-	}
+	atmProxy = new ATM(clientAccount, inputAccountPassword);
+	atmProxy->ShowBalance();
 }
 
 
@@ -418,7 +462,6 @@ int main() {
 			break;
 		}
 	}
-	DeleteBank(privat);
 
 	system("pause");
 	return 0;
