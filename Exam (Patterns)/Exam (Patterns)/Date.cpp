@@ -28,7 +28,3 @@ Date::~Date()
 {
 }
 
-
-bool CheckDate(short inputDay, short inputMonth, short inputYear) {
-	return (inputDay <= DAYS_IN_MONTH && inputMonth <= MONTHS_IN_YEAR && inputYear >= MIN_YEAR && inputYear <= MAX_YEAR);
-}

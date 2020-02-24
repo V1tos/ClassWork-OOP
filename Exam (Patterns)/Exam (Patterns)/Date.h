@@ -21,5 +21,3 @@ public:
 	void ShowDate();
 	~Date();
 };
-
-bool CheckDate(short inputDay, short inputMonth, short inputYear);
